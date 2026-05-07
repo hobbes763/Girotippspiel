@@ -1,0 +1,128 @@
+﻿{% extends "base.html" %}
+{% block title %}Rangliste – Bogos Giro Tippspiel 2026{% endblock %}
+{% block content %}
+
+<h1 class="page-title">🏆 Tippspiel Rangliste</h1>
+<p class="page-subtitle">Bogos Giro d'Italia 2026 &mdash; {{ stages_played }} von 21 Etappen gespielt</p>
+
+{% if standings %}
+  <!-- Podium (top 3) -->
+  {% if standings|length >= 3 %}
+  <div class="podium">
+    <div class="podium-place podium-2">
+      <div class="podium-name">{{ standings[1].player.name }}</div>
+      <div class="podium-pts">{{ standings[1].total }} Pkt</div>
+      <div class="podium-block">2</div>
+    </div>
+    <div class="podium-place podium-1">
+      <div class="podium-name">{{ standings[0].player.name }}</div>
+      <div class="podium-pts">{{ standings[0].total }} Pkt</div>
+      <div class="podium-block">1</div>
+    </div>
+    <div class="podium-place podium-3">
+      <div class="podium-name">{{ standings[2].player.name }}</div>
+      <div class="podium-pts">{{ standings[2].total }} Pkt</div>
+      <div class="podium-block">3</div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Full standings table -->
+  <div class="card">
+    <div class="card-header">📊 Gesamtrangliste</div>
+    <div style="overflow-x:auto">
+      <table class="standings-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Spieler</th>
+            <th>Gesamt</th>
+            <th>Etappe</th>
+            <th>Leader</th>
+            <th>Berg</th>
+            <th>Punkte</th>
+            <th>Nachwuchs</th>
+            <th>Team</th>
+            <th>Endboni</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in standings %}
+          {% set rank_class = "rank-" ~ s.rank if s.rank <= 3 else "" %}
+          <tr>
+            <td class="rank-cell {{ rank_class }}">{{ s.rank }}</td>
+            <td><a href="/spieler/{{ s.player.id }}" class="player-link">{{ s.player.name }}</a></td>
+            <td class="total-pts">{{ s.total }}</td>
+            <td>{% if s.cat_totals.etappe > 0 %}<span class="pts-positive">{{ s.cat_totals.etappe }}</span>{% else %}<span class="pts-zero">—</span>{% endif %}</td>
+            <td>{% if s.cat_totals.leader > 0 %}<span class="pts-positive">{{ s.cat_totals.leader }}</span>{% else %}<span class="pts-zero">—</span>{% endif %}</td>
+            <td>{% if s.cat_totals.berg > 0 %}<span class="pts-positive">{{ s.cat_totals.berg }}</span>{% else %}<span class="pts-zero">—</span>{% endif %}</td>
+            <td>{% if s.cat_totals.punkte > 0 %}<span class="pts-positive">{{ s.cat_totals.punkte }}</span>{% else %}<span class="pts-zero">—</span>{% endif %}</td>
+            <td>{% if s.cat_totals.nachwuchs > 0 %}<span class="pts-positive">{{ s.cat_totals.nachwuchs }}</span>{% else %}<span class="pts-zero">—</span>{% endif %}</td>
+            <td>{% if s.cat_totals.team_tag > 0 %}<span class="pts-positive">{{ s.cat_totals.team_tag }}</span>{% else %}<span class="pts-zero">—</span>{% endif %}</td>
+            <td>
+              {% set fb = s.final_pts %}
+              {% set ftotal = fb.gesamt + fb.berg_gesamt + fb.punkte_gesamt + fb.nachwuchs_gesamt + fb.team_gesamt + fb.ankunft %}
+              {% if ftotal > 0 %}<span class="pts-positive">{{ ftotal }}</span>{% else %}<span class="pts-zero">—</span>{% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Stage-by-stage chart (simple table) -->
+  {% if stages %}
+  <div class="card">
+    <div class="card-header">📈 Punkteverlauf nach Etappe</div>
+    <div style="overflow-x:auto; padding:1rem">
+      <table class="standings-table table-sm">
+        <thead>
+          <tr>
+            <th>Spieler</th>
+            {% for stage in stages %}
+            <th><a href="/etappe/{{ stage.num }}" style="color:var(--pink-dark)">E{{ stage.num }}</a></th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in standings %}
+          <tr>
+            <td><a href="/spieler/{{ s.player.id }}" class="player-link">{{ s.player.name }}</a></td>
+            {% for stage in stages %}
+              {% set idx = loop.index0 %}
+              {% if idx < s.cumulative|length %}
+                <td>{{ s.cumulative[idx] }}</td>
+              {% else %}
+                <td class="pts-zero">—</td>
+              {% endif %}
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+
+{% else %}
+  <div class="card" style="padding:3rem; text-align:center; color:var(--text-muted)">
+    <div style="font-size:3rem;margin-bottom:1rem">🏁</div>
+    <h2 style="margin-bottom:.5rem">Noch keine Daten</h2>
+    <p>Zuerst <a href="/admin/fahrer" class="player-link">Fahrer erfassen</a>, dann <a href="/admin/spieler" class="player-link">Spieler-Teams zusammenstellen</a>.</p>
+  </div>
+{% endif %}
+
+<!-- Stage navigation -->
+{% if stages %}
+<div class="section-title">Etappen</div>
+<div class="stage-nav">
+  {% for stage in stages %}
+  <a href="/etappe/{{ stage.num }}" class="stage-chip">
+    E{{ stage.num }}{% if stage.is_ttt %} TTT{% endif %}
+  </a>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}

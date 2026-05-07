@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Fahrer verwalten – Admin{% endblock %}
+{% block content %}
+
+<div style="margin-bottom:1rem">
+  <a href="/admin" style="color:var(--pink);font-weight:600;font-size:.875rem">← Admin</a>
+</div>
+
+<h1 class="page-title">🚴 Fahrer verwalten</h1>
+<p class="page-subtitle">{{ riders|length }} Fahrer im System &mdash; Budget pro Spieler: 10.0 Punkte</p>
+
+<div style="display:grid;grid-template-columns:1fr 2fr;gap:1.5rem;align-items:start">
+
+  <!-- Add form -->
+  <div class="card" style="padding:1.25rem">
+    <div class="card-header" style="margin:-1.25rem -1.25rem 1rem;padding:1rem 1.25rem">➕ Fahrer hinzufügen</div>
+    <form method="post" action="/admin/fahrer/add">
+      <div class="form-group">
+        <label class="form-label">Name (Nachname Vorname)</label>
+        <input name="name" class="form-control" placeholder="z.B. Pogacar Tadej" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Team</label>
+        <input name="team" class="form-control" list="teams-list" placeholder="z.B. UAE Team Emirates" required>
+        <datalist id="teams-list">
+          {% for team in teams %}
+          <option value="{{ team }}">
+          {% endfor %}
+        </datalist>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Wert (Budget-Kosten, z.B. 0.1 – 2.0)</label>
+        <input name="wert" type="number" step="0.1" min="0.1" max="5.0" class="form-control" placeholder="z.B. 1.4" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%">Fahrer hinzufügen</button>
+    </form>
+
+    <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)">
+      <div style="font-size:.8rem;font-weight:700;color:var(--text-muted);margin-bottom:.5rem">WERTESKALA (Beispiel)</div>
+      <div style="font-size:.8rem;color:var(--text-muted);line-height:1.8">
+        0.1 = Domestique<br>
+        0.2 – 0.4 = Helfer / Spezialisten<br>
+        0.5 – 0.8 = Etappenjäger<br>
+        1.0 – 1.5 = Spitzenfahrer<br>
+        1.7 – 2.0 = Topfavoriten
+      </div>
+    </div>
+  </div>
+
+  <!-- Rider list -->
+  <div class="card">
+    <div class="card-header">📋 Alle Fahrer ({{ riders|length }})</div>
+    <div style="overflow-x:auto">
+      <table class="standings-table">
+        <thead>
+          <tr>
+            <th style="text-align:left">Name</th>
+            <th style="text-align:left">Team</th>
+            <th>Wert</th>
+            <th>ID</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for rider in riders %}
+          <tr>
+            <td style="font-weight:500">{{ rider.name }}</td>
+            <td style="color:var(--text-muted);font-size:.85rem">{{ rider.team }}</td>
+            <td>
+              <span style="background:var(--pink-bg);color:var(--pink);padding:.1rem .4rem;border-radius:4px;font-size:.8rem;font-weight:700">
+                {{ rider.wert }}
+              </span>
+            </td>
+            <td style="color:var(--text-muted);font-size:.8rem">#{{ rider.id }}</td>
+            <td>
+              <form method="post" action="/admin/fahrer/delete" style="display:inline" onsubmit="return confirm('{{ rider.name }} wirklich löschen?')">
+                <input type="hidden" name="rider_id" value="{{ rider.id }}">
+                <button type="submit" class="btn btn-danger btn-sm">🗑</button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="5" style="text-align:center;color:var(--text-muted);padding:2rem">
+              Noch keine Fahrer. Füge oben links Fahrer hinzu.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

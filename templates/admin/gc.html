@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}Giro GC aktualisieren – Admin{% endblock %}
+{% block content %}
+
+<div style="margin-bottom:1rem">
+  <a href="/admin" style="color:var(--pink);font-weight:600;font-size:.875rem">← Admin</a>
+</div>
+
+<h1 class="page-title">🇮🇹 Giro GC – Aktuelle Wertungen</h1>
+<p class="page-subtitle">Informative Gesamtwertung (kein Einfluss auf Tippspiel-Punkte)</p>
+
+<form method="post" action="/admin/gc">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+    <div>
+      <!-- GC -->
+      <div class="card" style="padding:1.25rem;margin-bottom:1rem">
+        <div class="card-header" style="margin:-1.25rem -1.25rem 1rem">
+          <span class="jersey jersey-pink">Rosa</span> Gesamtwertung (Top 10)
+        </div>
+        {% for i in range(10) %}
+        {% set rid = gc.gc[i] if gc.gc is defined and i < gc.gc|length else "" %}
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem">
+          <span style="width:24px;text-align:right;font-weight:700;color:var(--text-muted);font-size:.85rem">{{ i+1 }}.</span>
+          <select name="gc" class="form-control" style="flex:1">
+            <option value="">— Fahrer —</option>
+            {% for r in riders %}
+            <option value="{{ r.id }}" {% if r.id == rid %}selected{% endif %}>{{ r.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Berg -->
+      <div class="card" style="padding:1.25rem;margin-bottom:1rem">
+        <div class="card-header" style="margin:-1.25rem -1.25rem 1rem">
+          <span class="jersey jersey-dots">Berg</span> Bergwertung (Top 5)
+        </div>
+        {% for i in range(5) %}
+        {% set rid = gc.berg[i] if gc.berg is defined and i < gc.berg|length else "" %}
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem">
+          <span style="width:24px;text-align:right;font-weight:700;color:var(--text-muted);font-size:.85rem">{{ i+1 }}.</span>
+          <select name="berg" class="form-control" style="flex:1">
+            <option value="">— Fahrer —</option>
+            {% for r in riders %}
+            <option value="{{ r.id }}" {% if r.id == rid %}selected{% endif %}>{{ r.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div>
+      <!-- Punkte -->
+      <div class="card" style="padding:1.25rem;margin-bottom:1rem">
+        <div class="card-header" style="margin:-1.25rem -1.25rem 1rem">
+          <span class="jersey jersey-green">Punkte</span> Punktewertung (Top 5)
+        </div>
+        {% for i in range(5) %}
+        {% set rid = gc.punkte[i] if gc.punkte is defined and i < gc.punkte|length else "" %}
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem">
+          <span style="width:24px;text-align:right;font-weight:700;color:var(--text-muted);font-size:.85rem">{{ i+1 }}.</span>
+          <select name="punkte" class="form-control" style="flex:1">
+            <option value="">— Fahrer —</option>
+            {% for r in riders %}
+            <option value="{{ r.id }}" {% if r.id == rid %}selected{% endif %}>{{ r.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Nachwuchs -->
+      <div class="card" style="padding:1.25rem;margin-bottom:1rem">
+        <div class="card-header" style="margin:-1.25rem -1.25rem 1rem">
+          <span class="jersey jersey-white">Weiss</span> Nachwuchs (Top 3)
+        </div>
+        {% for i in range(3) %}
+        {% set rid = gc.nachwuchs[i] if gc.nachwuchs is defined and i < gc.nachwuchs|length else "" %}
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem">
+          <span style="width:24px;text-align:right;font-weight:700;color:var(--text-muted);font-size:.85rem">{{ i+1 }}.</span>
+          <select name="nachwuchs" class="form-control" style="flex:1">
+            <option value="">— Fahrer —</option>
+            {% for r in riders %}
+            <option value="{{ r.id }}" {% if r.id == rid %}selected{% endif %}>{{ r.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Team -->
+      <div class="card" style="padding:1.25rem;margin-bottom:1rem">
+        <div class="card-header" style="margin:-1.25rem -1.25rem 1rem">
+          <span class="jersey jersey-blue">Team</span> Mannschaft (Top 3)
+        </div>
+        {% for i in range(3) %}
+        {% set tname = gc.team[i] if gc.team is defined and i < gc.team|length else "" %}
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem">
+          <span style="width:24px;text-align:right;font-weight:700;color:var(--text-muted);font-size:.85rem">{{ i+1 }}.</span>
+          <select name="team" class="form-control" style="flex:1">
+            <option value="">— Team —</option>
+            {% for team in teams %}
+            <option value="{{ team }}" {% if team == tname %}selected{% endif %}>{{ team }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Updated timestamp -->
+      <div class="card" style="padding:1.25rem;margin-bottom:1rem">
+        <div class="form-group" style="margin-bottom:0">
+          <label class="form-label">Stand (Datum/Zeit)</label>
+          <input name="updated" class="form-control" value="{{ gc.updated if gc.updated is defined else '' }}"
+                 placeholder="z.B. 10. Mai 2026, 17:30">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:.75rem;padding:.75rem 0">
+    <button type="submit" class="btn btn-primary" style="font-size:1rem;padding:.75rem 2rem">💾 GC speichern</button>
+    <a href="/giro" class="btn btn-secondary">Giro GC ansehen</a>
+  </div>
+</form>
+
+{% endblock %}

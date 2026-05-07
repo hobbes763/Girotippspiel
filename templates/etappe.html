@@ -1,0 +1,231 @@
+﻿{% extends "base.html" %}
+{% block title %}Etappe {{ num }} – Bogos Giro Tippspiel 2026{% endblock %}
+{% block content %}
+
+<!-- Stage navigation -->
+<div class="stage-nav">
+  {% for s in all_stages %}
+  <a href="/etappe/{{ s.num }}" class="stage-chip {% if s.num == num %}active{% endif %}">
+    E{{ s.num }}{% if s.is_ttt %} TTT{% endif %}
+  </a>
+  {% endfor %}
+</div>
+
+<div class="etappe-hero">
+  <div class="etappe-num">Etappe {{ stage.num }}{% if stage.is_ttt %} &mdash; Mannschaftszeitfahren{% endif %}</div>
+  <div class="etappe-name">{{ stage.name }}</div>
+  <div class="etappe-meta">📅 {{ stage.date }}</div>
+</div>
+
+{% set r = stage.results %}
+
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;margin-bottom:1.5rem">
+
+  <!-- Etappenwertung -->
+  {% if r.etappe %}
+  <div class="card">
+    <div class="card-header"><span class="jersey jersey-pink">Rosa</span> Etappenwertung</div>
+    <ul class="result-list">
+      {% for rid in r.etappe %}
+      {% if riders_by_id[rid] is defined %}
+      {% set rider = riders_by_id[rid] %}
+      {% set pos = loop.index %}
+      <li class="result-item">
+        <div class="result-pos {% if pos == 1 %}p1{% elif pos == 2 %}p2{% elif pos == 3 %}p3{% endif %}">{{ pos }}</div>
+        <div>
+          <div class="result-name">{{ rider.name }}</div>
+          <div class="result-team">{{ rider.team }}</div>
+        </div>
+        <div class="result-pts">+{{ [120,80,70,60,50,40,35,30,25,20,10,8][pos-1] if pos <= 12 else 0 }} Pkt</div>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <!-- Leader Trikot (GC) -->
+  {% if r.leader %}
+  <div class="card">
+    <div class="card-header"><span class="jersey jersey-pink">Maglia Rosa</span> GC-Führung nach Etappe</div>
+    <ul class="result-list">
+      {% set leader_pts = [30,20,15,12,12,9,8,8,7,6] %}
+      {% for rid in r.leader %}
+      {% if riders_by_id[rid] is defined %}
+      {% set rider = riders_by_id[rid] %}
+      {% set pos = loop.index %}
+      <li class="result-item">
+        <div class="result-pos {% if pos == 1 %}p1{% elif pos == 2 %}p2{% elif pos == 3 %}p3{% endif %}">{{ pos }}</div>
+        <div>
+          <div class="result-name">{{ rider.name }}</div>
+          <div class="result-team">{{ rider.team }}</div>
+        </div>
+        <div class="result-pts">+{{ leader_pts[pos-1] if pos <= 10 else 0 }} Pkt</div>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <!-- Berg Trikot -->
+  {% if r.berg %}
+  <div class="card">
+    <div class="card-header"><span class="jersey jersey-dots">Berg</span> Bergwertung</div>
+    <ul class="result-list">
+      {% set berg_pts = [15,10,7,5,4] %}
+      {% for rid in r.berg %}
+      {% if riders_by_id[rid] is defined %}
+      {% set rider = riders_by_id[rid] %}
+      {% set pos = loop.index %}
+      <li class="result-item">
+        <div class="result-pos {% if pos == 1 %}p1{% elif pos == 2 %}p2{% elif pos == 3 %}p3{% endif %}">{{ pos }}</div>
+        <div>
+          <div class="result-name">{{ rider.name }}</div>
+          <div class="result-team">{{ rider.team }}</div>
+        </div>
+        <div class="result-pts">+{{ berg_pts[pos-1] if pos <= 5 else 0 }} Pkt</div>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <!-- Punkte Trikot -->
+  {% if r.punkte %}
+  <div class="card">
+    <div class="card-header"><span class="jersey jersey-green">Punkte</span> Punktewertung</div>
+    <ul class="result-list">
+      {% set punkte_pts = [15,10,7,5,4] %}
+      {% for rid in r.punkte %}
+      {% if riders_by_id[rid] is defined %}
+      {% set rider = riders_by_id[rid] %}
+      {% set pos = loop.index %}
+      <li class="result-item">
+        <div class="result-pos {% if pos == 1 %}p1{% elif pos == 2 %}p2{% elif pos == 3 %}p3{% endif %}">{{ pos }}</div>
+        <div>
+          <div class="result-name">{{ rider.name }}</div>
+          <div class="result-team">{{ rider.team }}</div>
+        </div>
+        <div class="result-pts">+{{ punkte_pts[pos-1] if pos <= 5 else 0 }} Pkt</div>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <!-- Nachwuchs -->
+  {% if r.nachwuchs %}
+  <div class="card">
+    <div class="card-header"><span class="jersey jersey-white">Weisses Trikot</span> Nachwuchs</div>
+    <ul class="result-list">
+      {% set nw_pts = [10,7,5] %}
+      {% for rid in r.nachwuchs %}
+      {% if riders_by_id[rid] is defined %}
+      {% set rider = riders_by_id[rid] %}
+      {% set pos = loop.index %}
+      <li class="result-item">
+        <div class="result-pos {% if pos == 1 %}p1{% elif pos == 2 %}p2{% elif pos == 3 %}p3{% endif %}">{{ pos }}</div>
+        <div>
+          <div class="result-name">{{ rider.name }}</div>
+          <div class="result-team">{{ rider.team }}</div>
+        </div>
+        <div class="result-pts">+{{ nw_pts[pos-1] if pos <= 3 else 0 }} Pkt</div>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <!-- Team Tag -->
+  {% if r.team_day %}
+  <div class="card">
+    <div class="card-header"><span class="jersey jersey-blue">Team</span> Mannschaftswertung Tag</div>
+    <ul class="result-list">
+      {% set team_pts = [10,7,5] %}
+      {% for team in r.team_day %}
+      {% set pos = loop.index %}
+      <li class="result-item">
+        <div class="result-pos {% if pos == 1 %}p1{% elif pos == 2 %}p2{% elif pos == 3 %}p3{% endif %}">{{ pos }}</div>
+        <div class="result-name">{{ team }}</div>
+        <div class="result-pts">+{{ team_pts[pos-1] if pos <= 3 else 0 }} Pkt/Fahrer</div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <!-- TTT -->
+  {% if r.ttt_order and stage.is_ttt %}
+  <div class="card">
+    <div class="card-header">⏱ Mannschaftszeitfahren</div>
+    <ul class="result-list">
+      {% set ttt_pts = [30,20,15,10] %}
+      {% for team in r.ttt_order %}
+      {% set pos = loop.index %}
+      <li class="result-item">
+        <div class="result-pos {% if pos == 1 %}p1{% elif pos == 2 %}p2{% elif pos == 3 %}p3{% endif %}">{{ pos }}</div>
+        <div class="result-name">{{ team }}</div>
+        <div class="result-pts">+{{ ttt_pts[pos-1] if pos <= 4 else 0 }} Pkt/Fahrer</div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+</div>
+
+<!-- Points earned per player this stage -->
+<div class="card">
+  <div class="card-header">🏅 Punkte dieser Etappe nach Spieler</div>
+  <div style="overflow-x:auto">
+    <table class="standings-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Spieler</th>
+          <th>Gesamt bisher</th>
+          <th>Diese Etappe</th>
+          <th>Etappe</th>
+          <th>Leader</th>
+          <th>Berg</th>
+          <th>Punkte</th>
+          <th>Nachwuchs</th>
+          <th>Team</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% set stage_standings = standings | sort(attribute='total', reverse=true) %}
+        {% set stage_idx = num - 1 %}
+        {% for s in standings %}
+        {% set st = s.stage_totals[stage_idx] if stage_idx < s.stage_totals|length else none %}
+        <tr>
+          <td class="rank-cell">{{ loop.index }}</td>
+          <td><a href="/spieler/{{ s.player.id }}" class="player-link">{{ s.player.name }}</a></td>
+          <td class="total-pts">{{ s.total }}</td>
+          {% if st %}
+          <td style="font-weight:700;color:{% if st.pts > 0 %}var(--green){% else %}var(--text-muted){% endif %}">{{ st.pts }}</td>
+          <td>{% if st.breakdown.etappe > 0 %}<span class="pts-positive">{{ st.breakdown.etappe }}</span>{% else %}—{% endif %}</td>
+          <td>{% if st.breakdown.leader > 0 %}<span class="pts-positive">{{ st.breakdown.leader }}</span>{% else %}—{% endif %}</td>
+          <td>{% if st.breakdown.berg > 0 %}<span class="pts-positive">{{ st.breakdown.berg }}</span>{% else %}—{% endif %}</td>
+          <td>{% if st.breakdown.punkte > 0 %}<span class="pts-positive">{{ st.breakdown.punkte }}</span>{% else %}—{% endif %}</td>
+          <td>{% if st.breakdown.nachwuchs > 0 %}<span class="pts-positive">{{ st.breakdown.nachwuchs }}</span>{% else %}—{% endif %}</td>
+          <td>{% if st.breakdown.team_tag + st.breakdown.ttt > 0 %}<span class="pts-positive">{{ st.breakdown.team_tag + st.breakdown.ttt }}</span>{% else %}—{% endif %}</td>
+          {% else %}
+          <td colspan="7" style="color:var(--text-muted)">—</td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div style="text-align:right;margin-top:1rem">
+  <a href="/admin/etappe/{{ num }}" class="btn btn-secondary btn-sm">✏️ Ergebnisse bearbeiten</a>
+</div>
+
+{% endblock %}

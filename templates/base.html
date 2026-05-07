@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Bogos Giro Tippspiel 2026{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="logo">
+          <span class="logo-icon">🚴</span>
+          <span class="logo-text">Bogos Giro Tippspiel <span class="year">2026</span></span>
+        </a>
+        <nav class="main-nav">
+          <a href="/" class="nav-link {% if request.url.path == '/' %}active{% endif %}">Rangliste</a>
+          <a href="/giro" class="nav-link {% if request.url.path == '/giro' %}active{% endif %}">Giro GC</a>
+          <a href="/admin" class="nav-link nav-admin">Admin</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Bogos Giro Tippspiel 2026 &mdash; Giro d'Italia 9. Mai &ndash; 1. Juni 2026</p>
+    </div>
+  </footer>
+</body>
+</html>

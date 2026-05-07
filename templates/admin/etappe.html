@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+{% block title %}Etappe {{ num }} eintragen – Admin{% endblock %}
+{% block content %}
+
+<div style="margin-bottom:1rem">
+  <a href="/admin" style="color:var(--pink);font-weight:600;font-size:.875rem">← Admin</a>
+</div>
+
+<h1 class="page-title">📅 Etappe {{ num }} – Ergebnisse</h1>
+
+<!-- Stage navigation -->
+<div class="stage-nav" style="margin-bottom:1.5rem">
+  {% for n in range(1, 22) %}
+  <a href="/admin/etappe/{{ n }}" class="stage-chip {% if n == num %}active{% endif %}">E{{ n }}</a>
+  {% endfor %}
+</div>
+
+<form method="post" action="/admin/etappe/{{ num }}">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+
+    <!-- Left column: Meta + Etappe + Leader -->
+    <div>
+      <!-- Meta -->
+      <div class="card" style="padding:1.25rem;margin-bottom:1rem">
+        <div class="card-header" style="margin:-1.25rem -1.25rem 1rem">ℹ️ Etappen-Info</div>
+        <div class="form-group">
+          <label class="form-label">Etappenname</label>
+          <input name="name" class="form-control" value="{{ stage.name }}" placeholder="z.B. Durres – Tirana" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Datum</label>
+          <input name="date" type="date" class="form-control" value="{{ stage.date }}">
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer">
+            <input type="checkbox" name="is_ttt" {% if stage.is_ttt %}checked{% endif %} style="accent-color:var(--pink);width:16px;height:16px">
+            <span class="form-label" style="margin:0">Mannschaftszeitfahren (TTT)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Etappenwertung -->
+      <div class="card" style="padding:1.25rem;margin-bottom:1rem">
+        <div class="card-header" style="margin:-1.25rem -1.25rem 1rem">
+          <span class="jersey jersey-pink">Rosa</span> Etappenwertung (Top 12)
+        </div>
+        <div style="font-size:.8rem;color:var(--text-muted);margin-bottom:.75rem">
+          Pkt: 120 / 80 / 70 / 60 / 50 / 40 / 35 / 30 / 25 / 20 / 10 / 8
+        </div>
+        {% for i in range(12) %}
+        {% set rid = stage.results.etappe[i] if i < stage.results.etappe|length else "" %}
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem">
+          <span style="width:24px;text-align:right;font-weight:700;color:var(--text-muted);font-size:.85rem">{{ i+1 }}.</span>
+          <select name="etappe" class="form-control" style="flex:1">
+            <option value="">— Fahrer wählen —</option>
+            {% for r in riders %}
+            <option value="{{ r.id }}" {% if r.id == rid %}selected{% endif %}>{{ r.name }} ({{ r.team }})</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- GC / Leader -->
+      <div class="card" style="padding:1.25rem;margin-bottom:1rem">
+        <div class="card-header" style="margin:-1.25rem -1.25rem 1rem">
+          <span class="jersey jersey-pink">Maglia Rosa</span> GC-Führung nach Etappe (Top 10)
+        </div>
+        <div style="font-size:.8rem;color:var(--text-muted);margin-bottom:.75rem">
+          Pkt: 30 / 20 / 15 / 12 / 12 / 9 / 8 / 8 / 7 / 6
+        </div>
+        {% for i in range(10) %}
+        {% set rid = stage.results.leader[i] if i < stage.results.leader|length else "" %}
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem">
+          <span style="width:24px;text-align:right;font-weight:700;color:var(--text-muted);font-size:.85rem">{{ i+1 }}.</span>
+          <select name="leader" class="form-control" style="flex:1">
+            <option value="">— Fahrer wählen —</option>
+            {% for r in riders %}
+            <option value="{{ r.id }}" {% if r.id == rid %}selected{% endif %}>{{ r.name }} ({{ r.team }})</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Right column: Jerseys + Team -->
+    <div>
+
+      <!-- Berg -->
+      <div class="card" style="padding:1.25rem;margin-bottom:1rem">
+        <div class="card-header" style="margin:-1.25rem -1.25rem 1rem">
+          <span class="jersey jersey-dots">Berg</span> Bergwertung – Führung nach Etappe (Top 5)
+        </div>
+        <div style="font-size:.8rem;color:var(--text-muted);margin-bottom:.75rem">Pkt: 15 / 10 / 7 / 5 / 4</div>
+        {% for i in range(5) %}
+        {% set rid = stage.results.berg[i] if i < stage.results.berg|length else "" %}
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem">
+          <span style="width:24px;text-align:right;font-weight:700;color:var(--text-muted);font-size:.85rem">{{ i+1 }}.</span>
+          <select name="berg" class="form-control" style="flex:1">
+            <option value="">— Fahrer wählen —</option>
+            {% for r in riders %}
+            <option value="{{ r.id }}" {% if r.id == rid %}selected{% endif %}>{{ r.name }} ({{ r.team }})</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Punkte -->
+      <div class="card" style="padding:1.25rem;margin-bottom:1rem">
+        <div class="card-header" style="margin:-1.25rem -1.25rem 1rem">
+          <span class="jersey jersey-green">Punkte</span> Punktewertung – Führung nach Etappe (Top 5)
+        </div>
+        <div style="font-size:.8rem;color:var(--text-muted);margin-bottom:.75rem">Pkt: 15 / 10 / 7 / 5 / 4</div>
+        {% for i in range(5) %}
+        {% set rid = stage.results.punkte[i] if i < stage.results.punkte|length else "" %}
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem">
+          <span style="width:24px;text-align:right;font-weight:700;color:var(--text-muted);font-size:.85rem">{{ i+1 }}.</span>
+          <select name="punkte" class="form-control" style="flex:1">
+            <option value="">— Fahrer wählen —</option>
+            {% for r in riders %}
+            <option value="{{ r.id }}" {% if r.id == rid %}selected{% endif %}>{{ r.name }} ({{ r.team }})</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Nachwuchs -->
+      <div class="card" style="padding:1.25rem;margin-bottom:1rem">
+        <div class="card-header" style="margin:-1.25rem -1.25rem 1rem">
+          <span class="jersey jersey-white">Weiss</span> Nachwuchswertung – Führung (Top 3)
+        </div>
+        <div style="font-size:.8rem;color:var(--text-muted);margin-bottom:.75rem">Pkt: 10 / 7 / 5</div>
+        {% for i in range(3) %}
+        {% set rid = stage.results.nachwuchs[i] if i < stage.results.nachwuchs|length else "" %}
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem">
+          <span style="width:24px;text-align:right;font-weight:700;color:var(--text-muted);font-size:.85rem">{{ i+1 }}.</span>
+          <select name="nachwuchs" class="form-control" style="flex:1">
+            <option value="">— Fahrer wählen —</option>
+            {% for r in riders %}
+            <option value="{{ r.id }}" {% if r.id == rid %}selected{% endif %}>{{ r.name }} ({{ r.team }})</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Team Tag -->
+      <div class="card" style="padding:1.25rem;margin-bottom:1rem">
+        <div class="card-header" style="margin:-1.25rem -1.25rem 1rem">
+          <span class="jersey jersey-blue">Team</span> Mannschaftswertung Tag (Top 3)
+        </div>
+        <div style="font-size:.8rem;color:var(--text-muted);margin-bottom:.75rem">Pkt: 10 / 7 / 5 pro Fahrer im Team</div>
+        {% for i in range(3) %}
+        {% set tname = stage.results.team_day[i] if i < stage.results.team_day|length else "" %}
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem">
+          <span style="width:24px;text-align:right;font-weight:700;color:var(--text-muted);font-size:.85rem">{{ i+1 }}.</span>
+          <select name="team_day" class="form-control" style="flex:1">
+            <option value="">— Team wählen —</option>
+            {% for team in teams %}
+            <option value="{{ team }}" {% if team == tname %}selected{% endif %}>{{ team }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- TTT -->
+      <div class="card" style="padding:1.25rem;margin-bottom:1rem" id="ttt-section">
+        <div class="card-header" style="margin:-1.25rem -1.25rem 1rem">⏱ TTT – Mannschaftszeitfahren (Top 4)</div>
+        <div style="font-size:.8rem;color:var(--text-muted);margin-bottom:.75rem">Pkt: 30 / 20 / 15 / 10 pro Fahrer</div>
+        {% for i in range(4) %}
+        {% set tname = stage.results.ttt_order[i] if i < stage.results.ttt_order|length else "" %}
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem">
+          <span style="width:24px;text-align:right;font-weight:700;color:var(--text-muted);font-size:.85rem">{{ i+1 }}.</span>
+          <select name="ttt_order" class="form-control" style="flex:1">
+            <option value="">— Team wählen —</option>
+            {% for team in teams %}
+            <option value="{{ team }}" {% if team == tname %}selected{% endif %}>{{ team }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+
+  <div style="display:flex;gap:.75rem;margin-top:.5rem;padding:.75rem 0">
+    <button type="submit" class="btn btn-primary" style="font-size:1rem;padding:.75rem 2rem">💾 Etappe speichern</button>
+    <a href="/etappe/{{ num }}" class="btn btn-secondary">Ansicht E{{ num }}</a>
+    <a href="/" class="btn btn-secondary">Zur Rangliste</a>
+  </div>
+</form>
+
+{% endblock %}

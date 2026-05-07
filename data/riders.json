@@ -1,0 +1,1112 @@
+[
+  {
+    "id": 1,
+    "name": "GROVES Kaden",
+    "team": "Alpecin - Premier Tech",
+    "wert": 1.3
+  },
+  {
+    "id": 2,
+    "name": "BAYER Tobias",
+    "team": "Alpecin - Premier Tech",
+    "wert": 0.1
+  },
+  {
+    "id": 3,
+    "name": "BUSATTO Francesco",
+    "team": "Alpecin - Premier Tech",
+    "wert": 0.1
+  },
+  {
+    "id": 4,
+    "name": "GEENS Jonas",
+    "team": "Alpecin - Premier Tech",
+    "wert": 0.1
+  },
+  {
+    "id": 5,
+    "name": "PLANCKAERT Edward",
+    "team": "Alpecin - Premier Tech",
+    "wert": 0.2
+  },
+  {
+    "id": 6,
+    "name": "PLOWRIGHT Jensen",
+    "team": "Alpecin - Premier Tech",
+    "wert": 0.1
+  },
+  {
+    "id": 7,
+    "name": "PRICE-PEJTERSEN Johan",
+    "team": "Alpecin - Premier Tech",
+    "wert": 0.1
+  },
+  {
+    "id": 8,
+    "name": "VERGALLITO Luca",
+    "team": "Alpecin - Premier Tech",
+    "wert": 0.1
+  },
+  {
+    "id": 9,
+    "name": "BUITRAGO Santiago",
+    "team": "Bahrain - Victorious",
+    "wert": 0.3
+  },
+  {
+    "id": 10,
+    "name": "CARUSO Damiano",
+    "team": "Bahrain - Victorious",
+    "wert": 0.2
+  },
+  {
+    "id": 11,
+    "name": "Stannard Robert",
+    "team": "Bahrain - Victorious",
+    "wert": 0.1
+  },
+  {
+    "id": 12,
+    "name": "MIHOLJEVIC Fran",
+    "team": "Bahrain - Victorious",
+    "wert": 0.1
+  },
+  {
+    "id": 13,
+    "name": "EULÁLIO Afonso",
+    "team": "Bahrain - Victorious",
+    "wert": 0.1
+  },
+  {
+    "id": 14,
+    "name": "PAASSCHENS Mathijs",
+    "team": "Bahrain - Victorious",
+    "wert": 0.1
+  },
+  {
+    "id": 15,
+    "name": "SEGAERT Alec",
+    "team": "Bahrain - Victorious",
+    "wert": 0.1
+  },
+  {
+    "id": 16,
+    "name": "ZAMBANINI Edoardo",
+    "team": "Bahrain - Victorious",
+    "wert": 0.1
+  },
+  {
+    "id": 17,
+    "name": "TSVETKOV Nikita",
+    "team": "Bardiani CSF",
+    "wert": 0.1
+  },
+  {
+    "id": 18,
+    "name": "MAGLI Filippo",
+    "team": "Bardiani CSF",
+    "wert": 0.1
+  },
+  {
+    "id": 19,
+    "name": "MARCELLUSI Martin",
+    "team": "Bardiani CSF",
+    "wert": 0.1
+  },
+  {
+    "id": 20,
+    "name": "ROJAS Vicente",
+    "team": "Bardiani CSF",
+    "wert": 0.1
+  },
+  {
+    "id": 21,
+    "name": "PALETTI Luca",
+    "team": "Bardiani CSF",
+    "wert": 0.1
+  },
+  {
+    "id": 22,
+    "name": "TAROZZI Manuele",
+    "team": "Bardiani CSF",
+    "wert": 0.1
+  },
+  {
+    "id": 23,
+    "name": "TURCONI Filippo",
+    "team": "Bardiani CSF",
+    "wert": 0.1
+  },
+  {
+    "id": 24,
+    "name": "ZANONCELLO Enrico",
+    "team": "Bardiani CSF",
+    "wert": 0.3
+  },
+  {
+    "id": 25,
+    "name": "GALL Felix",
+    "team": "Decathlon CMA CGM",
+    "wert": 1.3
+  },
+  {
+    "id": 26,
+    "name": "ANDRESEN Tobias Lund",
+    "team": "Decathlon CMA CGM",
+    "wert": 1.2
+  },
+  {
+    "id": 27,
+    "name": "GUDMESTAD Tord",
+    "team": "Decathlon CMA CGM",
+    "wert": 0.1
+  },
+  {
+    "id": 28,
+    "name": "MÜHLBERGER Gregor",
+    "team": "Decathlon CMA CGM",
+    "wert": 0.1
+  },
+  {
+    "id": 29,
+    "name": "NAESEN Oliver",
+    "team": "Decathlon CMA CGM",
+    "wert": 0.2
+  },
+  {
+    "id": 30,
+    "name": "PEDERSEN Rasmus Søjberg",
+    "team": "Decathlon CMA CGM",
+    "wert": 0.1
+  },
+  {
+    "id": 31,
+    "name": "SCOTSON Callum",
+    "team": "Decathlon CMA CGM",
+    "wert": 0.1
+  },
+  {
+    "id": 32,
+    "name": "STAUNE-MITTET Johannes",
+    "team": "Decathlon CMA CGM",
+    "wert": 0.2
+  },
+  {
+    "id": 33,
+    "name": "BATTISTELLA Samuele",
+    "team": "EF Education - EasyPost",
+    "wert": 0.1
+  },
+  {
+    "id": 34,
+    "name": "CEPEDA Jefferson Alexander",
+    "team": "EF Education - EasyPost",
+    "wert": 0.4
+  },
+  {
+    "id": 35,
+    "name": "Beloki Markel",
+    "team": "EF Education - EasyPost",
+    "wert": 0.1
+  },
+  {
+    "id": 36,
+    "name": "RAFFERTY Darren",
+    "team": "EF Education - EasyPost",
+    "wert": 0.1
+  },
+  {
+    "id": 37,
+    "name": "SHAW James",
+    "team": "EF Education - EasyPost",
+    "wert": 0.1
+  },
+  {
+    "id": 38,
+    "name": "VALGREN Michael",
+    "team": "EF Education - EasyPost",
+    "wert": 0.3
+  },
+  {
+    "id": 39,
+    "name": "VAN DER LEE Jardi Christiaan",
+    "team": "EF Education - EasyPost",
+    "wert": 0.1
+  },
+  {
+    "id": 40,
+    "name": "Mihkels Madis",
+    "team": "EF Education - EasyPost",
+    "wert": 0.1
+  },
+  {
+    "id": 41,
+    "name": "CAVAGNA Rémi",
+    "team": "Groupama - FDJ",
+    "wert": 0.2
+  },
+  {
+    "id": 42,
+    "name": "BARTHE Cyril",
+    "team": "Groupama - FDJ",
+    "wert": 0.1
+  },
+  {
+    "id": 43,
+    "name": "HUENS Axel",
+    "team": "Groupama - FDJ",
+    "wert": 0.1
+  },
+  {
+    "id": 44,
+    "name": "JACOBS Johan",
+    "team": "Groupama - FDJ",
+    "wert": 0.1
+  },
+  {
+    "id": 45,
+    "name": "KENCH Josh",
+    "team": "Groupama - FDJ",
+    "wert": 0.1
+  },
+  {
+    "id": 46,
+    "name": "PENHOËT Paul",
+    "team": "Groupama - FDJ",
+    "wert": 0.4
+  },
+  {
+    "id": 47,
+    "name": "ROCHAS Rémy",
+    "team": "Groupama - FDJ",
+    "wert": 0.1
+  },
+  {
+    "id": 48,
+    "name": "ROLLAND Brieuc",
+    "team": "Groupama - FDJ",
+    "wert": 0.1
+  },
+  {
+    "id": 49,
+    "name": "BERNAL Egan",
+    "team": "INEOS Grenadiers",
+    "wert": 0.8
+  },
+  {
+    "id": 50,
+    "name": "ARENSMAN Thymen",
+    "team": "INEOS Grenadiers",
+    "wert": 0.4
+  },
+  {
+    "id": 51,
+    "name": "GANNA Filippo",
+    "team": "INEOS Grenadiers",
+    "wert": 0.4
+  },
+  {
+    "id": 52,
+    "name": "HAIG Jack",
+    "team": "INEOS Grenadiers",
+    "wert": 0.2
+  },
+  {
+    "id": 53,
+    "name": "SHEFFIELD Magnus",
+    "team": "INEOS Grenadiers",
+    "wert": 0.3
+  },
+  {
+    "id": 54,
+    "name": "SVESTAD-BÅRDSENG Embret",
+    "team": "INEOS Grenadiers",
+    "wert": 0.1
+  },
+  {
+    "id": 55,
+    "name": "SWIFT Connor",
+    "team": "INEOS Grenadiers",
+    "wert": 0.1
+  },
+  {
+    "id": 56,
+    "name": "TURNER Ben",
+    "team": "INEOS Grenadiers",
+    "wert": 0.4
+  },
+  {
+    "id": 57,
+    "name": "CICCONE Giulio",
+    "team": "Lidl - Trek",
+    "wert": 0.5
+  },
+  {
+    "id": 58,
+    "name": "CONSONNI Simone",
+    "team": "Lidl - Trek",
+    "wert": 0.2
+  },
+  {
+    "id": 59,
+    "name": "GEE-WEST Derek",
+    "team": "Lidl - Trek",
+    "wert": 0.6
+  },
+  {
+    "id": 60,
+    "name": "GHEBREIGZABHIER Amanuel",
+    "team": "Lidl - Trek",
+    "wert": 0.1
+  },
+  {
+    "id": 61,
+    "name": "MILAN Jonathan",
+    "team": "Lidl - Trek",
+    "wert": 1.4
+  },
+  {
+    "id": 62,
+    "name": "SOBRERO Matteo",
+    "team": "Lidl - Trek",
+    "wert": 0.1
+  },
+  {
+    "id": 63,
+    "name": "TEUTENBERG Tim Torn",
+    "team": "Lidl - Trek",
+    "wert": 0.1
+  },
+  {
+    "id": 64,
+    "name": "WALSCHEID Max",
+    "team": "Lidl - Trek",
+    "wert": 0.2
+  },
+  {
+    "id": 65,
+    "name": "VAN EETVELT Lennert",
+    "team": "Lotto Intermarché",
+    "wert": 0.3
+  },
+  {
+    "id": 66,
+    "name": "Giddings Joshua",
+    "team": "Lotto Intermarché",
+    "wert": 0.1
+  },
+  {
+    "id": 67,
+    "name": "DE LIE Arnaud",
+    "team": "Lotto Intermarché",
+    "wert": 0.7
+  },
+  {
+    "id": 68,
+    "name": "AERTS Toon",
+    "team": "Lotto Intermarché",
+    "wert": 0.1
+  },
+  {
+    "id": 69,
+    "name": "GUALDI Simone",
+    "team": "Lotto Intermarché",
+    "wert": 0.1
+  },
+  {
+    "id": 70,
+    "name": "KOCKELMANN Mathieu",
+    "team": "Lotto Intermarché",
+    "wert": 0.1
+  },
+  {
+    "id": 71,
+    "name": "MENTEN Milan",
+    "team": "Lotto Intermarché",
+    "wert": 0.1
+  },
+  {
+    "id": 72,
+    "name": "ROTA Lorenzo",
+    "team": "Lotto Intermarché",
+    "wert": 0.1
+  },
+  {
+    "id": 73,
+    "name": "RUTSCH Jonas",
+    "team": "Lotto Intermarché",
+    "wert": 0.1
+  },
+  {
+    "id": 74,
+    "name": "GARCÍA CORTINA Iván",
+    "team": "Movistar Team",
+    "wert": 0.2
+  },
+  {
+    "id": 75,
+    "name": "AULAR Orluis",
+    "team": "Movistar Team",
+    "wert": 0.4
+  },
+  {
+    "id": 76,
+    "name": "LÓPEZ Juan Pedro",
+    "team": "Movistar Team",
+    "wert": 0.3
+  },
+  {
+    "id": 77,
+    "name": "MAS Enric",
+    "team": "Movistar Team",
+    "wert": 1.0
+  },
+  {
+    "id": 78,
+    "name": "MILESI Lorenzo",
+    "team": "Movistar Team",
+    "wert": 0.1
+  },
+  {
+    "id": 79,
+    "name": "OLIVEIRA Nelson",
+    "team": "Movistar Team",
+    "wert": 0.1
+  },
+  {
+    "id": 80,
+    "name": "ROMO Javier",
+    "team": "Movistar Team",
+    "wert": 0.3
+  },
+  {
+    "id": 81,
+    "name": "RUBIO Einer",
+    "team": "Movistar Team",
+    "wert": 0.2
+  },
+  {
+    "id": 82,
+    "name": "PINARELLO Alessandro",
+    "team": "NSN Cycling Team",
+    "wert": 0.2
+  },
+  {
+    "id": 83,
+    "name": "HIRT Jan",
+    "team": "NSN Cycling Team",
+    "wert": 0.2
+  },
+  {
+    "id": 84,
+    "name": "MULLEN Ryan",
+    "team": "NSN Cycling Team",
+    "wert": 0.1
+  },
+  {
+    "id": 85,
+    "name": "SCHULTZ Nick",
+    "team": "NSN Cycling Team",
+    "wert": 0.1
+  },
+  {
+    "id": 86,
+    "name": "SMITH Dion",
+    "team": "NSN Cycling Team",
+    "wert": 0.1
+  },
+  {
+    "id": 87,
+    "name": "STEWART Jake",
+    "team": "NSN Cycling Team",
+    "wert": 0.2
+  },
+  {
+    "id": 88,
+    "name": "STRONG Corbin",
+    "team": "NSN Cycling Team",
+    "wert": 0.3
+  },
+  {
+    "id": 89,
+    "name": "VERNON Ethan",
+    "team": "NSN Cycling Team",
+    "wert": 0.6
+  },
+  {
+    "id": 90,
+    "name": "BAX Sjoerd",
+    "team": "Pinarello Q36.5",
+    "wert": 0.1
+  },
+  {
+    "id": 91,
+    "name": "CHRISTEN Fabio",
+    "team": "Pinarello Q36.5",
+    "wert": 0.2
+  },
+  {
+    "id": 92,
+    "name": "DE LA CRUZ David",
+    "team": "Pinarello Q36.5",
+    "wert": 0.2
+  },
+  {
+    "id": 93,
+    "name": "DONOVAN Mark",
+    "team": "Pinarello Q36.5",
+    "wert": 0.1
+  },
+  {
+    "id": 94,
+    "name": "GONZÁLEZ David",
+    "team": "Pinarello Q36.5",
+    "wert": 0.1
+  },
+  {
+    "id": 95,
+    "name": "HARPER Chris",
+    "team": "Pinarello Q36.5",
+    "wert": 0.1
+  },
+  {
+    "id": 96,
+    "name": "MOSCHETTI Matteo",
+    "team": "Pinarello Q36.5",
+    "wert": 0.6
+  },
+  {
+    "id": 97,
+    "name": "ZUKOWSKY Nickolas",
+    "team": "Pinarello Q36.5",
+    "wert": 0.1
+  },
+  {
+    "id": 98,
+    "name": "HINDLEY Jai",
+    "team": "Red Bull - Bora - Hansgrohe",
+    "wert": 0.3
+  },
+  {
+    "id": 99,
+    "name": "ALEOTTI Giovanni",
+    "team": "Red Bull - Bora - Hansgrohe",
+    "wert": 0.1
+  },
+  {
+    "id": 100,
+    "name": "MOSCON Gianni",
+    "team": "Red Bull - Bora - Hansgrohe",
+    "wert": 0.2
+  },
+  {
+    "id": 101,
+    "name": "PELLIZZARI Giulio",
+    "team": "Red Bull - Bora - Hansgrohe",
+    "wert": 1.5
+  },
+  {
+    "id": 102,
+    "name": "Denz Nico",
+    "team": "Red Bull - Bora - Hansgrohe",
+    "wert": 0.2
+  },
+  {
+    "id": 103,
+    "name": "VAN DIJKE Mick",
+    "team": "Red Bull - Bora - Hansgrohe",
+    "wert": 0.1
+  },
+  {
+    "id": 104,
+    "name": "VLASOV Aleksandr",
+    "team": "Red Bull - Bora - Hansgrohe",
+    "wert": 0.3
+  },
+  {
+    "id": 105,
+    "name": "ZWIEHOFF Ben",
+    "team": "Red Bull - Bora - Hansgrohe",
+    "wert": 0.1
+  },
+  {
+    "id": 106,
+    "name": "BASTIAENS Ayco",
+    "team": "Soudal Quick-Step",
+    "wert": 0.1
+  },
+  {
+    "id": 107,
+    "name": "GAROFOLI Gianmarco",
+    "team": "Soudal Quick-Step",
+    "wert": 0.1
+  },
+  {
+    "id": 108,
+    "name": "MAGNIER Paul",
+    "team": "Soudal Quick-Step",
+    "wert": 1.2
+  },
+  {
+    "id": 109,
+    "name": "RACCAGNI NOVIERO Andrea",
+    "team": "Soudal Quick-Step",
+    "wert": 0.1
+  },
+  {
+    "id": 110,
+    "name": "STUYVEN Jasper",
+    "team": "Soudal Quick-Step",
+    "wert": 0.2
+  },
+  {
+    "id": 111,
+    "name": "VAN GESTEL Dries",
+    "team": "Soudal Quick-Step",
+    "wert": 0.1
+  },
+  {
+    "id": 112,
+    "name": "ZANA Filippo",
+    "team": "Soudal Quick-Step",
+    "wert": 0.2
+  },
+  {
+    "id": 113,
+    "name": "Van den Bossche Fabio",
+    "team": "Soudal Quick-Step",
+    "wert": 0.1
+  },
+  {
+    "id": 114,
+    "name": "O'CONNOR Ben",
+    "team": "Jayco AlUla",
+    "wert": 0.6
+  },
+  {
+    "id": 115,
+    "name": "ACKERMANN Pascal",
+    "team": "Jayco AlUla",
+    "wert": 0.6
+  },
+  {
+    "id": 116,
+    "name": "BOUWMAN Koen",
+    "team": "Jayco AlUla",
+    "wert": 0.2
+  },
+  {
+    "id": 117,
+    "name": "DONALDSON Robert",
+    "team": "Jayco AlUla",
+    "wert": 0.1
+  },
+  {
+    "id": 118,
+    "name": "ENGELHARDT Felix",
+    "team": "Jayco AlUla",
+    "wert": 0.2
+  },
+  {
+    "id": 119,
+    "name": "HATHERLY Alan",
+    "team": "Jayco AlUla",
+    "wert": 0.2
+  },
+  {
+    "id": 120,
+    "name": "JUUL-JENSEN Christopher",
+    "team": "Jayco AlUla",
+    "wert": 0.2
+  },
+  {
+    "id": 121,
+    "name": "VENDRAME Andrea",
+    "team": "Jayco AlUla",
+    "wert": 0.2
+  },
+  {
+    "id": 122,
+    "name": "DE JONG Timo",
+    "team": "Picnic PostNL",
+    "wert": 0.1
+  },
+  {
+    "id": 123,
+    "name": "FLYNN Sean",
+    "team": "Picnic PostNL",
+    "wert": 0.1
+  },
+  {
+    "id": 124,
+    "name": "HAMILTON Chris",
+    "team": "Picnic PostNL",
+    "wert": 0.1
+  },
+  {
+    "id": 125,
+    "name": "Barguil Waren",
+    "team": "Picnic PostNL",
+    "wert": 0.2
+  },
+  {
+    "id": 126,
+    "name": "LEEMREIZE Gijs",
+    "team": "Picnic PostNL",
+    "wert": 0.1
+  },
+  {
+    "id": 127,
+    "name": "NABERMAN Tim",
+    "team": "Picnic PostNL",
+    "wert": 0.1
+  },
+  {
+    "id": 128,
+    "name": "VAN DEN BROEK Frank",
+    "team": "Picnic PostNL",
+    "wert": 0.1
+  },
+  {
+    "id": 129,
+    "name": "VAN UDEN Casper",
+    "team": "Picnic PostNL",
+    "wert": 0.7
+  },
+  {
+    "id": 130,
+    "name": "BAIS Mattia",
+    "team": "Polti VisitMalta",
+    "wert": 0.2
+  },
+  {
+    "id": 131,
+    "name": "CRESCIOLI Ludovico",
+    "team": "Polti VisitMalta",
+    "wert": 0.1
+  },
+  {
+    "id": 132,
+    "name": "LONARDI Giovanni",
+    "team": "Polti VisitMalta",
+    "wert": 0.4
+  },
+  {
+    "id": 133,
+    "name": "MAESTRI Mirco",
+    "team": "Polti VisitMalta",
+    "wert": 0.1
+  },
+  {
+    "id": 134,
+    "name": "MIFSUD Andrea",
+    "team": "Polti VisitMalta",
+    "wert": 0.1
+  },
+  {
+    "id": 135,
+    "name": "PESENTI Thomas",
+    "team": "Polti VisitMalta",
+    "wert": 0.1
+  },
+  {
+    "id": 136,
+    "name": "TONELLI Alessandro",
+    "team": "Polti VisitMalta",
+    "wert": 0.1
+  },
+  {
+    "id": 137,
+    "name": "SEVILLA Diego Pablo",
+    "team": "Polti VisitMalta",
+    "wert": 0.1
+  },
+  {
+    "id": 138,
+    "name": "VINGEGAARD Jonas",
+    "team": "Visma - Lease a Bike",
+    "wert": 2.4
+  },
+  {
+    "id": 139,
+    "name": "CAMPENAERTS Victor",
+    "team": "Visma - Lease a Bike",
+    "wert": 0.3
+  },
+  {
+    "id": 140,
+    "name": "KELDERMAN Wilco",
+    "team": "Visma - Lease a Bike",
+    "wert": 0.2
+  },
+  {
+    "id": 141,
+    "name": "KIELICH Timo",
+    "team": "Visma - Lease a Bike",
+    "wert": 0.2
+  },
+  {
+    "id": 142,
+    "name": "KUSS Sepp",
+    "team": "Visma - Lease a Bike",
+    "wert": 0.3
+  },
+  {
+    "id": 143,
+    "name": "LEMMEN Bart",
+    "team": "Visma - Lease a Bike",
+    "wert": 0.1
+  },
+  {
+    "id": 144,
+    "name": "PIGANZOLI Davide",
+    "team": "Visma - Lease a Bike",
+    "wert": 0.1
+  },
+  {
+    "id": 145,
+    "name": "REX Tim",
+    "team": "Visma - Lease a Bike",
+    "wert": 0.1
+  },
+  {
+    "id": 146,
+    "name": "LIENHARD Fabian",
+    "team": "Tudor Pro Cycling Team",
+    "wert": 0.1
+  },
+  {
+    "id": 147,
+    "name": "BARTA Will",
+    "team": "Tudor Pro Cycling Team",
+    "wert": 0.1
+  },
+  {
+    "id": 148,
+    "name": "FROIDEVAUX Robin",
+    "team": "Tudor Pro Cycling Team",
+    "wert": 0.1
+  },
+  {
+    "id": 149,
+    "name": "MOZZATO Luca",
+    "team": "Tudor Pro Cycling Team",
+    "wert": 0.3
+  },
+  {
+    "id": 150,
+    "name": "RONDEL Mathys",
+    "team": "Tudor Pro Cycling Team",
+    "wert": 0.1
+  },
+  {
+    "id": 151,
+    "name": "STORER Michael",
+    "team": "Tudor Pro Cycling Team",
+    "wert": 0.5
+  },
+  {
+    "id": 152,
+    "name": "STORK Florian",
+    "team": "Tudor Pro Cycling Team",
+    "wert": 0.2
+  },
+  {
+    "id": 153,
+    "name": "WARBASSE Larry",
+    "team": "Tudor Pro Cycling Team",
+    "wert": 0.1
+  },
+  {
+    "id": 154,
+    "name": "BJERG Mikkel",
+    "team": "UAE Team Emirates",
+    "wert": 0.1
+  },
+  {
+    "id": 155,
+    "name": "ARRIETA Igor",
+    "team": "UAE Team Emirates",
+    "wert": 0.1
+  },
+  {
+    "id": 156,
+    "name": "CHRISTEN Jan",
+    "team": "UAE Team Emirates",
+    "wert": 0.1
+  },
+  {
+    "id": 157,
+    "name": "NARVÁEZ Jhonatan",
+    "team": "UAE Team Emirates",
+    "wert": 0.3
+  },
+  {
+    "id": 158,
+    "name": "SOLER Marc",
+    "team": "UAE Team Emirates",
+    "wert": 0.3
+  },
+  {
+    "id": 159,
+    "name": "MORGADO António",
+    "team": "UAE Team Emirates",
+    "wert": 0.1
+  },
+  {
+    "id": 160,
+    "name": "VINE Jay",
+    "team": "UAE Team Emirates",
+    "wert": 0.5
+  },
+  {
+    "id": 161,
+    "name": "YATES Adam",
+    "team": "UAE Team Emirates",
+    "wert": 0.7
+  },
+  {
+    "id": 162,
+    "name": "GROENEWEGEN Dylan",
+    "team": "Unibet Rose Rockets",
+    "wert": 0.6
+  },
+  {
+    "id": 163,
+    "name": "DE VRIES Hartthijs",
+    "team": "Unibet Rose Rockets",
+    "wert": 0.1
+  },
+  {
+    "id": 164,
+    "name": "Kopecky Matyas",
+    "team": "Unibet Rose Rockets",
+    "wert": 0.1
+  },
+  {
+    "id": 165,
+    "name": "KOPECKÝ Tomáš",
+    "team": "Unibet Rose Rockets",
+    "wert": 0.1
+  },
+  {
+    "id": 166,
+    "name": "KUBIŠ Lukáš",
+    "team": "Unibet Rose Rockets",
+    "wert": 0.2
+  },
+  {
+    "id": 167,
+    "name": "LARSEN Niklas",
+    "team": "Unibet Rose Rockets",
+    "wert": 0.1
+  },
+  {
+    "id": 168,
+    "name": "POELS Wout",
+    "team": "Unibet Rose Rockets",
+    "wert": 0.2
+  },
+  {
+    "id": 169,
+    "name": "REINDERS Elmar",
+    "team": "Unibet Rose Rockets",
+    "wert": 0.1
+  },
+  {
+    "id": 170,
+    "name": "HOELGAARD Markus",
+    "team": "Uno-X Mobility",
+    "wert": 0.1
+  },
+  {
+    "id": 171,
+    "name": "HOLTER Ådne",
+    "team": "Uno-X Mobility",
+    "wert": 0.1
+  },
+  {
+    "id": 172,
+    "name": "KULSET Johannes",
+    "team": "Uno-X Mobility",
+    "wert": 0.1
+  },
+  {
+    "id": 173,
+    "name": "DVERSNES LAVIK Fredrik",
+    "team": "Uno-X Mobility",
+    "wert": 0.1
+  },
+  {
+    "id": 174,
+    "name": "LEKNESSUND Andreas",
+    "team": "Uno-X Mobility",
+    "wert": 0.3
+  },
+  {
+    "id": 175,
+    "name": "BLIKRA Erlend",
+    "team": "Uno-X Mobility",
+    "wert": 0.5
+  },
+  {
+    "id": 176,
+    "name": "LØLAND Sakarias Koller",
+    "team": "Uno-X Mobility",
+    "wert": 0.1
+  },
+  {
+    "id": 177,
+    "name": "TJØTTA Martin",
+    "team": "Uno-X Mobility",
+    "wert": 0.1
+  },
+  {
+    "id": 178,
+    "name": "BALLERINI Davide",
+    "team": "XDS Astana",
+    "wert": 0.5
+  },
+  {
+    "id": 179,
+    "name": "BETTIOL Alberto",
+    "team": "XDS Astana",
+    "wert": 0.2
+  },
+  {
+    "id": 180,
+    "name": "LIVYNS Arjen",
+    "team": "XDS Astana",
+    "wert": 0.1
+  },
+  {
+    "id": 181,
+    "name": "LÓPEZ Harold Martín",
+    "team": "XDS Astana",
+    "wert": 0.1
+  },
+  {
+    "id": 182,
+    "name": "MALUCELLI Matteo",
+    "team": "XDS Astana",
+    "wert": 0.1
+  },
+  {
+    "id": 183,
+    "name": "SCARONI Christian",
+    "team": "XDS Astana",
+    "wert": 0.3
+  },
+  {
+    "id": 184,
+    "name": "SILVA Guillermo Thomas",
+    "team": "XDS Astana",
+    "wert": 0.1
+  },
+  {
+    "id": 185,
+    "name": "ULISSI Diego",
+    "team": "XDS Astana",
+    "wert": 0.2
+  }
+]
