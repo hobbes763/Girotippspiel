@@ -891,3 +891,134 @@ select.form-control { cursor: pointer; }
   color: var(--text-muted);
   letter-spacing: .02em;
 }
+
+/* ─────────────────────────────────────────────
+   ETAPPENPLAN
+   ───────────────────────────────────────────── */
+.etappe-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .2rem;
+  padding: .18rem .55rem;
+  border-radius: 4px;
+  font-family: var(--font-display);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge-flach   { background: #dbeafe; color: #1d4ed8; }
+.badge-hugelig { background: #fef3c7; color: #92400e; }
+.badge-berg    { background: #fee2e2; color: #991b1b; }
+.badge-zf      { background: #f3e8ff; color: #6b21a8; }
+
+.sterne-row { display: inline-flex; gap: 1px; }
+.stern { font-size: .9rem; line-height: 1; }
+.stern.filled { color: var(--gold); }
+.stern.empty  { color: var(--border); }
+
+.etappenplan-table tr.etappe-today td {
+  background: #fff0f7;
+  border-left: none;
+}
+.etappenplan-table tr.etappe-today td:first-child {
+  border-left: 4px solid var(--pink);
+}
+.etappenplan-table tr.etappe-tomorrow td {
+  background: #f0fdf4;
+}
+.etappenplan-table tr.etappe-tomorrow td:first-child {
+  border-left: 4px solid var(--green);
+}
+
+.etappenplan-legende {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+  padding: .75rem 1.25rem;
+  font-size: .8rem;
+  color: var(--text-muted);
+}
+
+/* ─────────────────────────────────────────────
+   TAGESETAPPEN (Startseite)
+   ───────────────────────────────────────────── */
+.tagesetappen-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.tagesetappe-box {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  padding: 1.25rem 1.4rem;
+  border-left: 5px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.tagesetappe-heute {
+  border-left-color: var(--pink);
+  background: linear-gradient(135deg, #fff 60%, var(--pink-bg) 100%);
+}
+
+.tagesetappe-morgen {
+  border-left-color: var(--green);
+  background: linear-gradient(135deg, #fff 60%, #f0fdf4 100%);
+}
+
+.tagesetappe-label {
+  font-family: var(--font-display);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: .4rem;
+}
+
+.tagesetappe-heute .tagesetappe-label { color: var(--pink); }
+.tagesetappe-morgen .tagesetappe-label { color: var(--green); }
+
+.tagesetappe-num {
+  font-family: var(--font-display);
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: .2rem;
+}
+
+.tagesetappe-route {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .01em;
+  line-height: 1.15;
+  color: var(--header-dark);
+  margin-bottom: .65rem;
+}
+
+.tagesetappe-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem;
+  font-size: .78rem;
+  color: var(--text-muted);
+  margin-bottom: .5rem;
+}
+
+.tagesetappe-km {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.tagesetappe-sterne { display: flex; gap: 1px; }
+.tagesetappe-sterne .stern { font-size: 1rem; }

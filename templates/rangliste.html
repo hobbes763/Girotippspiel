@@ -16,6 +16,60 @@
   </div>
 </div>
 
+<!-- Heutige und morgige Etappe -->
+{% if today_stage or tomorrow_stage %}
+<div class="tagesetappen-row">
+  {% if today_stage %}
+  <div class="tagesetappe-box tagesetappe-heute">
+    <div class="tagesetappe-label">🚴 Heute</div>
+    <div class="tagesetappe-num">Etappe {{ today_stage.num }}</div>
+    <div class="tagesetappe-route">{{ today_stage.von }} → {{ today_stage.bis }}</div>
+    <div class="tagesetappe-meta">
+      <span>{{ today_stage.datum_de }}</span>
+      <span class="tagesetappe-km">{{ today_stage.km }} km</span>
+      {% if today_stage.typ == "Flach" %}
+        <span class="etappe-badge badge-flach">⟶ Flach</span>
+      {% elif today_stage.typ == "Hügelig" %}
+        <span class="etappe-badge badge-hugelig">⛰ Hügelig</span>
+      {% elif today_stage.typ == "Berg" %}
+        <span class="etappe-badge badge-berg">🏔 Berg</span>
+      {% elif today_stage.typ == "Zeitfahren" %}
+        <span class="etappe-badge badge-zf">⏱ Zeitfahren</span>
+      {% endif %}
+    </div>
+    <div class="tagesetappe-sterne">
+      {% for i in range(today_stage.sterne) %}<span class="stern filled">★</span>{% endfor %}
+      {% for i in range(5 - today_stage.sterne) %}<span class="stern empty">★</span>{% endfor %}
+    </div>
+  </div>
+  {% endif %}
+  {% if tomorrow_stage %}
+  <div class="tagesetappe-box tagesetappe-morgen">
+    <div class="tagesetappe-label">📅 Nächste Etappe</div>
+    <div class="tagesetappe-num">Etappe {{ tomorrow_stage.num }}</div>
+    <div class="tagesetappe-route">{{ tomorrow_stage.von }} → {{ tomorrow_stage.bis }}</div>
+    <div class="tagesetappe-meta">
+      <span>{{ tomorrow_stage.datum_de }}</span>
+      <span class="tagesetappe-km">{{ tomorrow_stage.km }} km</span>
+      {% if tomorrow_stage.typ == "Flach" %}
+        <span class="etappe-badge badge-flach">⟶ Flach</span>
+      {% elif tomorrow_stage.typ == "Hügelig" %}
+        <span class="etappe-badge badge-hugelig">⛰ Hügelig</span>
+      {% elif tomorrow_stage.typ == "Berg" %}
+        <span class="etappe-badge badge-berg">🏔 Berg</span>
+      {% elif tomorrow_stage.typ == "Zeitfahren" %}
+        <span class="etappe-badge badge-zf">⏱ Zeitfahren</span>
+      {% endif %}
+    </div>
+    <div class="tagesetappe-sterne">
+      {% for i in range(tomorrow_stage.sterne) %}<span class="stern filled">★</span>{% endfor %}
+      {% for i in range(5 - tomorrow_stage.sterne) %}<span class="stern empty">★</span>{% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+
 {% if standings %}
   <!-- Podium (top 3) -->
   {% if standings|length >= 3 %}

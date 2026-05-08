@@ -1,0 +1,23 @@
+[
+  {"num": 1,  "datum": "2026-05-08", "datum_de": "Fr, 08.05.", "von": "Nessebar",           "bis": "Burgas",                 "km": 147, "typ": "Flach",      "sterne": 1},
+  {"num": 2,  "datum": "2026-05-09", "datum_de": "Sa, 09.05.", "von": "Burgas",              "bis": "Veliko Tarnovo",          "km": 221, "typ": "Hügelig",    "sterne": 3},
+  {"num": 3,  "datum": "2026-05-10", "datum_de": "So, 10.05.", "von": "Plovdiv",             "bis": "Sofia",                  "km": 175, "typ": "Berg",        "sterne": 3},
+  {"num": 4,  "datum": "2026-05-12", "datum_de": "Di, 12.05.", "von": "Catanzaro",           "bis": "Cosenza",                "km": 138, "typ": "Hügelig",    "sterne": 2},
+  {"num": 5,  "datum": "2026-05-13", "datum_de": "Mi, 13.05.", "von": "Praia a Mare",        "bis": "Potenza",                "km": 203, "typ": "Berg",        "sterne": 5},
+  {"num": 6,  "datum": "2026-05-14", "datum_de": "Do, 14.05.", "von": "Paestum",             "bis": "Napoli",                 "km": 142, "typ": "Flach",      "sterne": 1},
+  {"num": 7,  "datum": "2026-05-15", "datum_de": "Fr, 15.05.", "von": "Formia",              "bis": "Blockhaus",              "km": 244, "typ": "Berg",        "sterne": 5},
+  {"num": 8,  "datum": "2026-05-16", "datum_de": "Sa, 16.05.", "von": "Chieti",              "bis": "Fermo",                  "km": 156, "typ": "Hügelig",    "sterne": 3},
+  {"num": 9,  "datum": "2026-05-17", "datum_de": "So, 17.05.", "von": "Cervia",              "bis": "Corno alle Scale",       "km": 184, "typ": "Berg",        "sterne": 4},
+  {"num": 10, "datum": "2026-05-19", "datum_de": "Di, 19.05.", "von": "Viareggio",           "bis": "Massa",                  "km": 42,  "typ": "Zeitfahren",  "sterne": 2},
+  {"num": 11, "datum": "2026-05-20", "datum_de": "Mi, 20.05.", "von": "Porcari",             "bis": "Chiavari",               "km": 195, "typ": "Hügelig",    "sterne": 3},
+  {"num": 12, "datum": "2026-05-21", "datum_de": "Do, 21.05.", "von": "Imperia",             "bis": "Novi Ligure",            "km": 175, "typ": "Hügelig",    "sterne": 3},
+  {"num": 13, "datum": "2026-05-22", "datum_de": "Fr, 22.05.", "von": "Alessandria",         "bis": "Verbania",               "km": 189, "typ": "Hügelig",    "sterne": 3},
+  {"num": 14, "datum": "2026-05-23", "datum_de": "Sa, 23.05.", "von": "Aosta",               "bis": "Pila (Gressan)",         "km": 133, "typ": "Berg",        "sterne": 5},
+  {"num": 15, "datum": "2026-05-24", "datum_de": "So, 24.05.", "von": "Voghera",             "bis": "Milano",                 "km": 157, "typ": "Flach",      "sterne": 1},
+  {"num": 16, "datum": "2026-05-26", "datum_de": "Di, 26.05.", "von": "Bellinzona",          "bis": "Carì",                   "km": 113, "typ": "Berg",        "sterne": 5},
+  {"num": 17, "datum": "2026-05-27", "datum_de": "Mi, 27.05.", "von": "Cassano d'Adda",      "bis": "Andalo",                 "km": 202, "typ": "Berg",        "sterne": 4},
+  {"num": 18, "datum": "2026-05-28", "datum_de": "Do, 28.05.", "von": "Fai della Paganella", "bis": "Pieve di Soligo",        "km": 171, "typ": "Hügelig",    "sterne": 3},
+  {"num": 19, "datum": "2026-05-29", "datum_de": "Fr, 29.05.", "von": "Feltre",              "bis": "Alleghe (Piani di Pezzè)","km": 151, "typ": "Berg",       "sterne": 5},
+  {"num": 20, "datum": "2026-05-30", "datum_de": "Sa, 30.05.", "von": "Gemona del Friuli",   "bis": "Piancavallo",            "km": 200, "typ": "Berg",        "sterne": 5},
+  {"num": 21, "datum": "2026-05-31", "datum_de": "So, 31.05.", "von": "Roma",                "bis": "Roma",                   "km": 131, "typ": "Flach",      "sterne": 1}
+]

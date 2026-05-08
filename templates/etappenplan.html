@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Etappenplan – Bogos Giro Tippspiel 2026{% endblock %}
+{% block content %}
+
+<h1 class="page-title">Etappenplan</h1>
+<p class="page-subtitle">Giro d'Italia 2026 &mdash; 21 Etappen &mdash; 9. Mai – 1. Juni 2026 &mdash; 3.468 km</p>
+
+<div class="card">
+  <div class="card-header">🗺 Alle Etappen im Überblick</div>
+  <div style="overflow-x:auto">
+    <table class="standings-table etappenplan-table">
+      <thead>
+        <tr>
+          <th style="text-align:center;width:48px">#</th>
+          <th style="text-align:left">Datum</th>
+          <th style="text-align:left">Von</th>
+          <th style="text-align:left">Nach</th>
+          <th style="text-align:right">km</th>
+          <th style="text-align:center">Art</th>
+          <th style="text-align:center">Schwierigkeit</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in route %}
+        <tr class="{% if s.datum == today %}etappe-today{% elif s.datum == tomorrow %}etappe-tomorrow{% endif %}">
+          <td style="text-align:center;font-family:var(--font-display);font-weight:800;font-size:1.1rem;color:var(--pink)">
+            {{ s.num }}
+          </td>
+          <td style="text-align:left;white-space:nowrap;font-weight:600">{{ s.datum_de }}</td>
+          <td style="text-align:left;color:var(--text-muted)">{{ s.von }}</td>
+          <td style="text-align:left;font-weight:600">{{ s.bis }}</td>
+          <td style="text-align:right;font-variant-numeric:tabular-nums;font-weight:600">{{ s.km }}</td>
+          <td style="text-align:center">
+            {% if s.typ == "Flach" %}
+              <span class="etappe-badge badge-flach">⟶ Flach</span>
+            {% elif s.typ == "Hügelig" %}
+              <span class="etappe-badge badge-hugelig">⛰ Hügelig</span>
+            {% elif s.typ == "Berg" %}
+              <span class="etappe-badge badge-berg">🏔 Berg</span>
+            {% elif s.typ == "Zeitfahren" %}
+              <span class="etappe-badge badge-zf">⏱ Zeitfahren</span>
+            {% endif %}
+          </td>
+          <td style="text-align:center">
+            <span class="sterne-row">
+              {% for i in range(s.sterne) %}<span class="stern filled">★</span>{% endfor %}
+              {% for i in range(5 - s.sterne) %}<span class="stern empty">★</span>{% endfor %}
+            </span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="etappenplan-legende">
+  <span class="etappe-badge badge-flach">⟶ Flach</span>
+  <span class="etappe-badge badge-hugelig">⛰ Hügelig</span>
+  <span class="etappe-badge badge-berg">🏔 Berg</span>
+  <span class="etappe-badge badge-zf">⏱ Zeitfahren</span>
+  <span style="color:var(--text-muted);font-size:.8rem;margin-left:.5rem">
+    Schwierigkeit: <span class="stern filled">★</span> = leicht &nbsp;/&nbsp; <span class="stern filled">★★★★★</span> = sehr schwer
+  </span>
+</div>
+
+{% endblock %}

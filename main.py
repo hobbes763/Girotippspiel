@@ -1,4 +1,5 @@
 ﻿import json
+from datetime import date
 from pathlib import Path
 from fastapi import FastAPI, Request, Form, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -32,6 +33,16 @@ def next_id(items):
 
 # ── Public pages ──────────────────────────────────────────────────────────────
 
+def get_stage_today_tomorrow():
+    route = load("route.json")
+    today_str = date.today().isoformat()
+    today_stage = next((s for s in route if s["datum"] == today_str), None)
+    route_sorted = sorted(route, key=lambda s: s["datum"])
+    future = [s for s in route_sorted if s["datum"] > today_str]
+    tomorrow_stage = future[0] if future else None
+    return today_stage, tomorrow_stage
+
+
 @app.get("/", response_class=HTMLResponse)
 async def rangliste(request: Request):
     players = load("players.json")
@@ -39,11 +50,14 @@ async def rangliste(request: Request):
     stages = load("stages.json")
     final = load("final.json")
     standings = calculate_standings(players, riders, stages, final)
+    today_stage, tomorrow_stage = get_stage_today_tomorrow()
     return templates.TemplateResponse("rangliste.html", {
         "request": request,
         "standings": standings,
         "stages": stages,
         "stages_played": len(stages),
+        "today_stage": today_stage,
+        "tomorrow_stage": tomorrow_stage,
     })
 
 
@@ -95,6 +109,21 @@ async def etappe_detail(request: Request, num: int):
         "standings": standings,
         "all_stages": all_stages,
         "num": num,
+    })
+
+
+@app.get("/etappenplan", response_class=HTMLResponse)
+async def etappenplan(request: Request):
+    route = load("route.json")
+    today_str = date.today().isoformat()
+    route_sorted = sorted(route, key=lambda s: s["datum"])
+    future = [s for s in route_sorted if s["datum"] > today_str]
+    tomorrow_str = future[0]["datum"] if future else ""
+    return templates.TemplateResponse("etappenplan.html", {
+        "request": request,
+        "route": route_sorted,
+        "today": today_str,
+        "tomorrow": tomorrow_str,
     })
 
 
