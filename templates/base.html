@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
@@ -6,23 +6,48 @@
   <title>{% block title %}Bogos Giro Tippspiel 2026{% endblock %}</title>
   <link rel="stylesheet" href="/static/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
   <header class="site-header">
-    <div class="container">
-      <div class="header-inner">
-        <a href="/" class="logo">
-          <span class="logo-icon">🚴</span>
-          <span class="logo-text">Bogos Giro Tippspiel <span class="year">2026</span></span>
+
+    <!-- Logo-Bar: offizielles Giro-Logo prominent -->
+    <div class="logo-bar">
+      <div class="container logo-bar-inner">
+        <a href="/" style="display:flex;align-items:center;gap:1rem;text-decoration:none">
+          <img
+            src="https://components2.rcsobjects.it/rcs_sport_giro2020-layout/v0/assets/img/ext/logo-giro.svg"
+            alt="Giro d'Italia"
+            class="giro-official-logo"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          >
+          <!-- Fallback SVG-Logo falls CDN nicht erreichbar -->
+          <svg style="display:none;height:52px;width:auto" viewBox="0 0 220 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="220" height="60" rx="4" fill="none"/>
+            <text x="8" y="42" font-family="'Barlow Condensed',sans-serif" font-weight="900" font-size="42" fill="#e8005a" letter-spacing="-1">GIRO</text>
+            <text x="114" y="28" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="13" fill="rgba(255,255,255,0.7)" letter-spacing="2">D'ITALIA</text>
+            <text x="114" y="46" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="13" fill="rgba(255,255,255,0.7)" letter-spacing="2">2026</text>
+          </svg>
         </a>
+        <div class="tippspiel-branding">
+          <span class="tippspiel-label">Freundesgruppe</span>
+          <span class="tippspiel-name">Bogos Tippspiel <span class="year">2026</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nav-Bar -->
+    <div class="nav-bar">
+      <div class="container nav-bar-inner">
         <nav class="main-nav">
           <a href="/" class="nav-link {% if request.url.path == '/' %}active{% endif %}">Rangliste</a>
-          <a href="/giro" class="nav-link {% if request.url.path == '/giro' %}active{% endif %}">Giro GC</a>
+          <a href="/giro" class="nav-link {% if request.url.path == '/giro' %}active{% endif %}">Fahrerliste</a>
           <a href="/admin" class="nav-link nav-admin">Admin</a>
         </nav>
       </div>
     </div>
+
   </header>
 
   <main class="main-content">

@@ -2,26 +2,45 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --pink: #e8005a;
-  --pink-light: #ff4d8d;
-  --pink-dark: #b8003a;
-  --pink-bg: #fff0f5;
+  /* Maglia Rosa – offizielle Giro-Farben */
+  --pink:       #EF0060;
+  --pink-light: #FF4D8D;
+  --pink-dark:  #C0004A;
+  --pink-bg:    #FFF0F7;
+  --pink-mid:   #F5004F;
+
+  /* Header */
+  --header-dark: #111111;
+  --header-nav:  #EF0060;
+
+  /* Italienische Trikolore */
   --green: #009246;
-  --red: #ce2b37;
-  --gold: #f0b429;
+  --red:   #ce2b37;
+
+  /* Awards */
+  --gold:   #e8b624;
   --silver: #9ea3b0;
   --bronze: #c47c2a;
-  --text: #1a1a2e;
+
+  /* Neutrals */
+  --black:      #0f0f0f;
+  --dark:       #1a1a1a;
+  --text:       #1a1a1a;
   --text-muted: #6b7280;
-  --border: #e5e7eb;
-  --white: #ffffff;
-  --bg: #f9fafb;
-  --card-shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.04);
-  --card-shadow-hover: 0 4px 12px rgba(232,0,90,.15), 0 8px 24px rgba(0,0,0,.08);
+  --border:     #e5e7eb;
+  --bg:         #f5f5f5;
+  --white:      #ffffff;
+
+  --card-shadow:       0 1px 4px rgba(0,0,0,.07), 0 4px 20px rgba(0,0,0,.05);
+  --card-shadow-hover: 0 4px 16px rgba(239,0,96,.18), 0 8px 32px rgba(0,0,0,.1);
+
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+  --radius: 10px;
 }
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-body);
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -36,309 +55,541 @@ a { color: inherit; text-decoration: none; }
 /* ── Layout ── */
 .container { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
 
-/* ── Header ── */
+/* ─────────────────────────────────────────────
+   HEADER
+   ───────────────────────────────────────────── */
 .site-header {
-  background: linear-gradient(135deg, var(--pink-dark) 0%, var(--pink) 60%, var(--pink-light) 100%);
-  color: white;
-  box-shadow: 0 2px 12px rgba(232,0,90,.3);
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: 0 4px 24px rgba(0,0,0,.4);
 }
 
-.header-inner {
+/* Obere Leiste: schwarzer Hintergrund, Logo zentral/prominent */
+.logo-bar {
+  background: var(--header-dark);
+  padding: .75rem 0;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.logo-bar-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: .85rem 0;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
-.logo {
+.giro-logo-link { display: flex; align-items: center; }
+
+.giro-official-logo {
+  height: 54px;
+  width: auto;
+  display: block;
+}
+
+.tippspiel-branding {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .1rem;
+}
+
+.tippspiel-label {
+  font-family: var(--font-display);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.4);
+}
+
+.tippspiel-name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: white;
+  line-height: 1;
+}
+
+.tippspiel-name .year {
+  color: var(--pink);
+  margin-left: .15em;
+}
+
+/* Untere Leiste: Giro-Pink Navigation */
+.nav-bar {
+  background: var(--pink);
+}
+
+.nav-bar-inner {
   display: flex;
   align-items: center;
-  gap: .6rem;
-  font-weight: 800;
-  font-size: 1.15rem;
-  letter-spacing: -.02em;
-  color: white;
+  padding: 0;
 }
-.logo-icon { font-size: 1.5rem; }
-.logo .year { opacity: .8; font-weight: 600; }
 
-.main-nav { display: flex; gap: .25rem; }
+.main-nav { display: flex; gap: 0; }
+
 .nav-link {
-  padding: .45rem .9rem;
-  border-radius: 6px;
-  font-size: .875rem;
-  font-weight: 500;
-  color: rgba(255,255,255,.85);
-  transition: background .15s, color .15s;
+  padding: .55rem 1.1rem;
+  font-size: .78rem;
+  font-weight: 700;
+  color: rgba(255,255,255,.75);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  transition: color .15s, background .15s;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
 }
-.nav-link:hover, .nav-link.active {
-  background: rgba(255,255,255,.2);
+
+.nav-link:hover {
   color: white;
+  background: rgba(0,0,0,.12);
+  border-bottom-color: rgba(255,255,255,.5);
 }
-.nav-admin { opacity: .6; font-size: .8rem; }
+
+.nav-link.active {
+  color: white;
+  background: rgba(0,0,0,.18);
+  border-bottom-color: white;
+}
+
+.nav-admin { opacity: .55; }
 .nav-admin:hover { opacity: 1; }
 
 /* ── Main ── */
-.main-content { flex: 1; padding: 2rem 0; }
+.main-content { flex: 1; padding: 2rem 0 3rem; }
 
-/* ── Footer ── */
+/* ─────────────────────────────────────────────
+   FOOTER
+   ───────────────────────────────────────────── */
 .site-footer {
-  background: var(--text);
-  color: rgba(255,255,255,.5);
+  background: var(--header-dark);
+  color: rgba(255,255,255,.3);
   text-align: center;
-  padding: 1rem;
-  font-size: .8rem;
+  padding: 1.25rem;
+  font-size: .78rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  border-top: 3px solid var(--pink);
   margin-top: auto;
 }
 
-/* ── Page heading ── */
+/* ─────────────────────────────────────────────
+   PAGE TITLE
+   ───────────────────────────────────────────── */
 .page-title {
-  font-size: 1.75rem;
-  font-weight: 800;
-  letter-spacing: -.03em;
-  margin-bottom: .25rem;
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 900;
+  letter-spacing: -.01em;
+  text-transform: uppercase;
+  margin-bottom: .2rem;
   display: flex;
   align-items: center;
   gap: .5rem;
+  line-height: 1.1;
 }
-.page-subtitle { color: var(--text-muted); font-size: .9rem; margin-bottom: 1.75rem; }
 
-/* ── Cards ── */
+.page-subtitle {
+  color: var(--text-muted);
+  font-size: .875rem;
+  margin-bottom: 2rem;
+  letter-spacing: .02em;
+}
+
+/* ─────────────────────────────────────────────
+   CARDS
+   ───────────────────────────────────────────── */
 .card {
   background: var(--white);
-  border-radius: 12px;
+  border-radius: var(--radius);
   box-shadow: var(--card-shadow);
   overflow: hidden;
   margin-bottom: 1.5rem;
+  border: 1px solid rgba(0,0,0,.05);
 }
+
 .card-header {
-  padding: 1rem 1.25rem .75rem;
+  padding: .9rem 1.25rem;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   gap: .5rem;
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: .95rem;
+  font-size: 1rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  background: var(--white);
+  border-left: 4px solid var(--pink);
 }
 
-/* ── Standings table ── */
+/* ─────────────────────────────────────────────
+   STANDINGS TABLE
+   ───────────────────────────────────────────── */
 .standings-table { width: 100%; border-collapse: collapse; }
+
+.standings-table thead tr {
+  background: var(--header-dark);
+}
+
 .standings-table th {
-  background: var(--pink-bg);
-  color: var(--pink-dark);
+  color: rgba(255,255,255,.75);
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: .78rem;
   text-transform: uppercase;
-  letter-spacing: .04em;
-  padding: .65rem 1rem;
+  letter-spacing: .06em;
+  padding: .7rem 1rem;
   text-align: right;
   white-space: nowrap;
+  border: none;
 }
+
 .standings-table th:first-child,
 .standings-table th:nth-child(2) { text-align: left; }
+.standings-table th:first-child { border-left: 4px solid var(--pink); }
+
 .standings-table td {
-  padding: .8rem 1rem;
+  padding: .75rem 1rem;
   text-align: right;
   border-bottom: 1px solid var(--border);
   font-variant-numeric: tabular-nums;
   font-size: .9rem;
 }
+
 .standings-table td:first-child,
 .standings-table td:nth-child(2) { text-align: left; }
 .standings-table tr:last-child td { border-bottom: none; }
-.standings-table tr:hover td { background: #fafafa; }
+.standings-table tbody tr:hover td { background: var(--pink-bg); }
 
-.rank-cell { font-weight: 800; font-size: 1rem; width: 40px; }
+.rank-cell {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.1rem;
+  width: 42px;
+}
 .rank-1 { color: var(--gold); }
 .rank-2 { color: var(--silver); }
 .rank-3 { color: var(--bronze); }
 
-.player-link { font-weight: 600; color: var(--pink); }
-.player-link:hover { text-decoration: underline; }
+.player-link { font-weight: 600; color: var(--pink-dark); }
+.player-link:hover { color: var(--pink); text-decoration: underline; }
 
-.total-pts { font-weight: 800; font-size: 1.05rem; color: var(--pink); }
-.pts-positive { color: var(--green); font-weight: 600; }
+.total-pts {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--pink);
+}
+
+.pts-positive { color: var(--green); font-weight: 700; }
 .pts-zero { color: var(--border); }
 
-/* ── Stage chips ── */
+/* ─────────────────────────────────────────────
+   STAGE CHIPS
+   ───────────────────────────────────────────── */
 .stage-nav {
   display: flex;
   flex-wrap: wrap;
   gap: .4rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
 }
-.stage-chip {
-  padding: .3rem .7rem;
-  border-radius: 20px;
-  font-size: .8rem;
-  font-weight: 600;
-  background: var(--white);
-  border: 1.5px solid var(--border);
-  color: var(--text-muted);
-  transition: all .15s;
-}
-.stage-chip:hover { border-color: var(--pink); color: var(--pink); }
-.stage-chip.active { background: var(--pink); border-color: var(--pink); color: white; }
 
-/* ── Badge / Jersey ── */
-.jersey {
-  display: inline-block;
-  padding: .15rem .5rem;
+.stage-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  padding: .3rem .6rem;
   border-radius: 4px;
-  font-size: .72rem;
+  font-family: var(--font-display);
+  font-size: .85rem;
   font-weight: 700;
   letter-spacing: .03em;
+  text-transform: uppercase;
+  background: var(--white);
+  border: 2px solid var(--border);
+  color: var(--text-muted);
+  transition: all .12s;
 }
-.jersey-pink { background: var(--pink); color: white; }
-.jersey-green { background: var(--green); color: white; }
-.jersey-dots { background: #e74c3c; color: white; }
-.jersey-white { background: #f0f0f0; color: var(--text); border: 1px solid var(--border); }
-.jersey-blue { background: #3b82f6; color: white; }
 
-/* ── Result list ── */
+.stage-chip:hover {
+  border-color: var(--pink);
+  color: var(--pink);
+  background: var(--pink-bg);
+}
+
+.stage-chip.active {
+  background: var(--pink);
+  border-color: var(--pink);
+  color: white;
+}
+
+/* ─────────────────────────────────────────────
+   JERSEY BADGES
+   ───────────────────────────────────────────── */
+.jersey {
+  display: inline-flex;
+  align-items: center;
+  padding: .18rem .6rem;
+  border-radius: 3px;
+  font-family: var(--font-display);
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.jersey-pink  { background: var(--pink);  color: white; }
+.jersey-green { background: var(--green); color: white; }
+.jersey-dots  { background: #c0392b;      color: white; }
+.jersey-white { background: #f0f0f0;      color: var(--text); border: 1.5px solid var(--border); }
+.jersey-blue  { background: #2563eb;      color: white; }
+
+/* ─────────────────────────────────────────────
+   RESULT LIST
+   ───────────────────────────────────────────── */
 .result-list { list-style: none; }
+
 .result-item {
   display: flex;
   align-items: center;
   gap: .75rem;
-  padding: .6rem 1rem;
+  padding: .65rem 1rem;
   border-bottom: 1px solid var(--border);
+  transition: background .1s;
 }
+
 .result-item:last-child { border-bottom: none; }
+.result-item:hover { background: var(--pink-bg); }
+
 .result-pos {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: var(--font-display);
   font-weight: 800;
-  font-size: .8rem;
+  font-size: .85rem;
   flex-shrink: 0;
   background: var(--bg);
   color: var(--text-muted);
 }
-.result-pos.p1 { background: var(--gold); color: white; }
+.result-pos.p1 { background: var(--gold);   color: white; }
 .result-pos.p2 { background: var(--silver); color: white; }
 .result-pos.p3 { background: var(--bronze); color: white; }
-.result-name { flex: 1; font-weight: 500; }
-.result-team { font-size: .8rem; color: var(--text-muted); }
-.result-pts { font-weight: 700; color: var(--pink); font-size: .9rem; }
 
-/* ── Rider grid ── */
+.result-name { flex: 1; font-weight: 600; }
+.result-team { font-size: .78rem; color: var(--text-muted); }
+.result-pts {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: .95rem;
+  color: var(--pink);
+}
+
+/* ─────────────────────────────────────────────
+   RIDER GRID
+   ───────────────────────────────────────────── */
 .rider-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1rem;
   padding: 1rem;
 }
+
 .rider-card {
   background: var(--bg);
   border-radius: 8px;
   padding: .9rem 1rem;
-  border: 1.5px solid var(--border);
-  transition: border-color .15s;
+  border: 2px solid var(--border);
+  transition: border-color .15s, box-shadow .15s;
 }
-.rider-card:hover { border-color: var(--pink); }
-.rider-name { font-weight: 600; margin-bottom: .2rem; }
-.rider-team { font-size: .8rem; color: var(--text-muted); margin-bottom: .5rem; }
-.rider-wert { font-size: .75rem; font-weight: 700; color: var(--pink); }
-.rider-total { font-size: 1.1rem; font-weight: 800; color: var(--text); text-align: right; }
 
-/* ── Stats row ── */
+.rider-card:hover {
+  border-color: var(--pink);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.rider-name { font-weight: 700; margin-bottom: .2rem; }
+.rider-team { font-size: .78rem; color: var(--text-muted); margin-bottom: .5rem; }
+
+.rider-wert {
+  font-family: var(--font-display);
+  font-size: .8rem;
+  font-weight: 800;
+  color: var(--pink-dark);
+  letter-spacing: .03em;
+}
+
+.rider-total {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--text);
+  text-align: right;
+}
+
+/* ─────────────────────────────────────────────
+   STATS ROW
+   ───────────────────────────────────────────── */
 .stats-row {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
 }
+
 .stat-box {
   background: var(--white);
-  border-radius: 10px;
-  padding: 1rem 1.25rem;
+  border-radius: var(--radius);
+  padding: 1rem 1.4rem;
   box-shadow: var(--card-shadow);
   min-width: 120px;
   flex: 1;
+  border-top: 3px solid var(--pink);
 }
-.stat-label { font-size: .75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: .25rem; }
-.stat-value { font-size: 1.6rem; font-weight: 800; letter-spacing: -.02em; }
-.stat-value.pink { color: var(--pink); }
 
-/* ── Admin ── */
+.stat-label {
+  font-family: var(--font-display);
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: .3rem;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -.01em;
+  line-height: 1;
+}
+
+.stat-value.pink   { color: var(--pink); }
+.stat-value.purple { color: var(--pink); }
+
+/* ─────────────────────────────────────────────
+   ADMIN
+   ───────────────────────────────────────────── */
 .admin-header {
-  background: linear-gradient(135deg, #1a1a2e, #2d2d44);
+  background: linear-gradient(135deg, var(--header-dark) 0%, #2a2a2a 100%);
   color: white;
-  border-radius: 12px;
+  border-radius: var(--radius);
   padding: 1.5rem;
   margin-bottom: 1.5rem;
+  border-left: 5px solid var(--pink);
 }
+
 .admin-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
+
 .admin-card {
   background: var(--white);
-  border-radius: 10px;
+  border-radius: var(--radius);
   padding: 1.25rem;
   box-shadow: var(--card-shadow);
   border-left: 4px solid var(--pink);
   transition: box-shadow .15s;
 }
-.admin-card:hover { box-shadow: var(--card-shadow-hover); }
-.admin-card-title { font-weight: 700; margin-bottom: .25rem; }
-.admin-card-count { font-size: 1.8rem; font-weight: 800; color: var(--pink); }
 
-/* ── Forms ── */
+.admin-card:hover { box-shadow: var(--card-shadow-hover); }
+.admin-card-title { font-weight: 700; margin-bottom: .25rem; font-size: .875rem; }
+
+.admin-card-count {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--pink);
+}
+
+/* ─────────────────────────────────────────────
+   FORMS
+   ───────────────────────────────────────────── */
 .form-group { margin-bottom: 1rem; }
-.form-label { display: block; font-weight: 600; font-size: .85rem; margin-bottom: .4rem; }
+
+.form-label {
+  display: block;
+  font-weight: 700;
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin-bottom: .4rem;
+  color: var(--text-muted);
+}
+
 .form-control {
   width: 100%;
-  padding: .55rem .85rem;
-  border: 1.5px solid var(--border);
-  border-radius: 7px;
+  padding: .6rem .9rem;
+  border: 2px solid var(--border);
+  border-radius: 6px;
   font-size: .9rem;
   font-family: inherit;
   transition: border-color .15s;
   background: var(--white);
+  color: var(--text);
 }
+
 .form-control:focus { outline: none; border-color: var(--pink); }
 select.form-control { cursor: pointer; }
 
+/* ─────────────────────────────────────────────
+   BUTTONS
+   ───────────────────────────────────────────── */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: .4rem;
-  padding: .55rem 1.1rem;
-  border-radius: 7px;
-  font-size: .875rem;
-  font-weight: 600;
+  padding: .6rem 1.2rem;
+  border-radius: 6px;
+  font-family: var(--font-display);
+  font-size: .9rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
   cursor: pointer;
   border: none;
   transition: all .15s;
-  font-family: inherit;
 }
+
 .btn-primary { background: var(--pink); color: white; }
 .btn-primary:hover { background: var(--pink-dark); }
-.btn-secondary { background: var(--bg); color: var(--text); border: 1.5px solid var(--border); }
-.btn-secondary:hover { border-color: var(--text-muted); }
+
+.btn-secondary {
+  background: var(--white);
+  color: var(--text);
+  border: 2px solid var(--border);
+}
+.btn-secondary:hover { border-color: var(--pink); color: var(--pink); }
+
+.btn-pink { background: var(--pink); color: white; }
+.btn-pink:hover { background: var(--pink-dark); }
+
 .btn-danger { background: #fee2e2; color: #dc2626; }
 .btn-danger:hover { background: #fecaca; }
-.btn-sm { padding: .3rem .7rem; font-size: .8rem; }
+.btn-sm { padding: .3rem .75rem; font-size: .78rem; }
 
-/* ── Rider selector ── */
+/* ─────────────────────────────────────────────
+   RIDER SELECTOR
+   ───────────────────────────────────────────── */
 .rider-selector {
   max-height: 380px;
   overflow-y: auto;
-  border: 1.5px solid var(--border);
+  border: 2px solid var(--border);
   border-radius: 8px;
   background: var(--white);
 }
+
 .rider-option {
   display: flex;
   align-items: center;
@@ -348,97 +599,155 @@ select.form-control { cursor: pointer; }
   cursor: pointer;
   transition: background .1s;
 }
+
 .rider-option:last-child { border-bottom: none; }
 .rider-option:hover { background: var(--pink-bg); }
 .rider-option input[type=checkbox] { accent-color: var(--pink); width: 16px; height: 16px; }
-.rider-option-name { flex: 1; font-weight: 500; }
-.rider-option-team { font-size: .8rem; color: var(--text-muted); }
+.rider-option-name { flex: 1; font-weight: 600; }
+.rider-option-team { font-size: .78rem; color: var(--text-muted); }
+
 .rider-option-wert {
-  font-size: .8rem;
-  font-weight: 700;
-  color: var(--pink);
+  font-family: var(--font-display);
+  font-size: .82rem;
+  font-weight: 800;
+  color: var(--pink-dark);
   background: var(--pink-bg);
-  padding: .1rem .4rem;
-  border-radius: 4px;
+  padding: .12rem .45rem;
+  border-radius: 3px;
 }
 
-.budget-bar-wrap { background: var(--border); border-radius: 4px; height: 8px; margin: .5rem 0; overflow: hidden; }
+.budget-bar-wrap {
+  background: var(--border);
+  border-radius: 4px;
+  height: 6px;
+  margin: .5rem 0;
+  overflow: hidden;
+}
+
 .budget-bar { height: 100%; border-radius: 4px; background: var(--pink); transition: width .3s; }
 .budget-bar.over { background: #dc2626; }
-.budget-info { font-size: .8rem; color: var(--text-muted); }
+.budget-info { font-size: .78rem; color: var(--text-muted); }
 
-/* ── Dropdown for select ── */
-.select-multi {
-  min-height: 120px;
-  font-size: .875rem;
-}
+.select-multi { min-height: 120px; font-size: .875rem; }
 
-/* ── Alerts ── */
+/* ─────────────────────────────────────────────
+   ALERTS
+   ───────────────────────────────────────────── */
 .alert {
-  padding: .75rem 1rem;
-  border-radius: 8px;
+  padding: .8rem 1.1rem;
+  border-radius: 7px;
   font-size: .875rem;
   margin-bottom: 1rem;
+  border-left: 4px solid;
 }
-.alert-success { background: #d1fae5; color: #065f46; }
-.alert-info { background: #dbeafe; color: #1e40af; }
 
-/* ── Table small ── */
+.alert-success { background: #d1fae5; color: #065f46; border-color: var(--green); }
+.alert-info    { background: var(--pink-bg); color: var(--pink-dark); border-color: var(--pink); }
+
 .table-sm td, .table-sm th { padding: .45rem .75rem; font-size: .85rem; }
 
-/* ── Responsive ── */
+/* ─────────────────────────────────────────────
+   RESPONSIVE
+   ───────────────────────────────────────────── */
 @media (max-width: 640px) {
-  .page-title { font-size: 1.4rem; }
+  .page-title { font-size: 1.8rem; }
   .stats-row { gap: .6rem; }
-  .stat-value { font-size: 1.3rem; }
+  .stat-value { font-size: 1.6rem; }
   .standings-table th:nth-child(n+4),
   .standings-table td:nth-child(n+4) { display: none; }
-  .logo-text { font-size: 1rem; }
+  .giro-official-logo { height: 40px; }
+  .tippspiel-name { font-size: 1.1rem; }
   .rider-grid { grid-template-columns: 1fr 1fr; }
 }
 
-/* ── Podium ── */
+/* ─────────────────────────────────────────────
+   PODIUM
+   ───────────────────────────────────────────── */
 .podium {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: 1rem;
-  padding: 2rem 1rem 0;
-  margin-bottom: 2rem;
+  gap: 1.25rem;
+  padding: 2.5rem 1rem 0;
+  margin-bottom: 2.5rem;
 }
+
 .podium-place {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: .5rem;
+  gap: .4rem;
 }
-.podium-name { font-weight: 700; font-size: .9rem; text-align: center; }
-.podium-pts { font-size: .8rem; color: var(--text-muted); }
+
+.podium-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+
+.podium-pts { font-size: .8rem; color: var(--text-muted); font-weight: 600; }
+
 .podium-block {
-  width: 80px;
-  border-radius: 8px 8px 0 0;
+  width: 88px;
+  border-radius: 6px 6px 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-family: var(--font-display);
+  font-size: 2rem;
   font-weight: 900;
+  color: white;
 }
-.podium-1 .podium-block { height: 100px; background: linear-gradient(180deg, #ffd700, #f0b429); color: white; }
-.podium-2 .podium-block { height: 75px; background: linear-gradient(180deg, #c0c0c0, #9ea3b0); color: white; }
-.podium-3 .podium-block { height: 55px; background: linear-gradient(180deg, #cd7f32, #c47c2a); color: white; }
 
-/* ── Section divider ── */
+.podium-1 .podium-block {
+  height: 110px;
+  background: linear-gradient(180deg, var(--pink-light) 0%, var(--pink) 50%, var(--pink-dark) 100%);
+  box-shadow: 0 4px 20px rgba(239,0,96,.4);
+}
+
+.podium-2 .podium-block {
+  height: 80px;
+  background: linear-gradient(180deg, #b0b6c2, var(--silver));
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+}
+
+.podium-3 .podium-block {
+  height: 58px;
+  background: linear-gradient(180deg, #d8954a, var(--bronze));
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
+}
+
+.podium-1 .podium-name::before { content: '🏆 '; }
+
+/* ─────────────────────────────────────────────
+   SECTION DIVIDER
+   ───────────────────────────────────────────── */
 .section-title {
-  font-size: 1rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: .85rem;
+  font-weight: 800;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: .06em;
-  margin: 1.5rem 0 .75rem;
+  letter-spacing: .1em;
+  margin: 2rem 0 .85rem;
   display: flex;
   align-items: center;
-  gap: .5rem;
+  gap: .75rem;
 }
+
+.section-title::before {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 1.1em;
+  background: var(--pink);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
 .section-title::after {
   content: '';
   flex: 1;
@@ -446,32 +755,150 @@ select.form-control { cursor: pointer; }
   background: var(--border);
 }
 
-/* ── Etappe header ── */
+/* ─────────────────────────────────────────────
+   ETAPPE HERO BANNER
+   ───────────────────────────────────────────── */
 .etappe-hero {
-  background: linear-gradient(135deg, var(--pink-dark), var(--pink));
+  background: linear-gradient(135deg, var(--header-dark) 0%, #2a2a2a 100%);
   color: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  border-radius: var(--radius);
+  padding: 1.75rem 1.5rem;
+  margin-bottom: 1.75rem;
+  position: relative;
+  overflow: hidden;
+  border-left: 5px solid var(--pink);
 }
-.etappe-num { font-size: .8rem; font-weight: 600; opacity: .8; text-transform: uppercase; letter-spacing: .06em; }
-.etappe-name { font-size: 1.5rem; font-weight: 800; margin: .25rem 0; }
-.etappe-meta { font-size: .875rem; opacity: .85; }
 
-/* ── mini pts breakdown ── */
+.etappe-hero::before {
+  content: '';
+  position: absolute;
+  left: -20px; top: -20px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: rgba(239,0,96,.12);
+  pointer-events: none;
+}
+
+.etappe-hero::after {
+  content: '';
+  position: absolute;
+  right: -30px; bottom: -30px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: rgba(239,0,96,.07);
+  pointer-events: none;
+}
+
+.etappe-num {
+  font-family: var(--font-display);
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--pink-light);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: .4rem;
+}
+
+.etappe-name {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  line-height: 1.1;
+  margin-bottom: .4rem;
+}
+
+.etappe-meta { font-size: .875rem; color: rgba(255,255,255,.6); }
+
+/* ─────────────────────────────────────────────
+   PUNKTE BREAKDOWN TAGS
+   ───────────────────────────────────────────── */
 .pts-breakdown {
   display: flex;
   flex-wrap: wrap;
   gap: .3rem;
   margin-top: .3rem;
 }
+
 .pts-tag {
-  padding: .1rem .45rem;
-  border-radius: 4px;
-  font-size: .72rem;
-  font-weight: 600;
+  padding: .12rem .5rem;
+  border-radius: 3px;
+  font-family: var(--font-display);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .03em;
   background: var(--bg);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   color: var(--text-muted);
 }
-.pts-tag.has-pts { background: var(--pink-bg); border-color: var(--pink); color: var(--pink); }
+
+.pts-tag.has-pts {
+  background: var(--pink-bg);
+  border-color: var(--pink);
+  color: var(--pink-dark);
+}
+
+/* ─────────────────────────────────────────────
+   GIRO HERO BANNER
+   ───────────────────────────────────────────── */
+.giro-hero-banner {
+  background: linear-gradient(135deg, var(--header-dark) 0%, #2a2a2a 100%);
+  border-radius: var(--radius);
+  padding: 2rem 2rem 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(239,0,96,.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,.25);
+}
+
+.giro-hero-banner::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(239,0,96,.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.giro-hero-logo {
+  height: 80px;
+  width: auto;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 12px rgba(239,0,96,.3));
+}
+
+.giro-hero-text { flex: 1; color: white; }
+
+.giro-hero-label {
+  font-family: var(--font-display);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--pink-light);
+  margin-bottom: .3rem;
+}
+
+.giro-hero-title {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  line-height: 1;
+  margin-bottom: .4rem;
+}
+
+.giro-hero-title .pink { color: var(--pink); }
+
+.giro-hero-subtitle {
+  font-size: .875rem;
+  color: rgba(255,255,255,.55);
+  letter-spacing: .02em;
+}
