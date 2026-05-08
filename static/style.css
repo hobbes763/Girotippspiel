@@ -844,37 +844,24 @@ select.form-control { cursor: pointer; }
    GIRO HERO BANNER
    ───────────────────────────────────────────── */
 .giro-hero-banner {
-  background: linear-gradient(135deg, var(--header-dark) 0%, #2a2a2a 100%);
+  background: #ffffff;
   border-radius: var(--radius);
-  padding: 2rem 2rem 1.5rem;
+  padding: 1.75rem 2rem;
   margin-bottom: 2rem;
   display: flex;
   align-items: center;
-  gap: 2rem;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(239,0,96,.2);
-  box-shadow: 0 8px 32px rgba(0,0,0,.25);
-}
-
-.giro-hero-banner::before {
-  content: '';
-  position: absolute;
-  top: -60px; right: -60px;
-  width: 260px; height: 260px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(239,0,96,.15) 0%, transparent 70%);
-  pointer-events: none;
+  gap: 2.5rem;
+  border-left: 5px solid var(--pink);
+  box-shadow: var(--card-shadow);
 }
 
 .giro-hero-logo {
-  height: 80px;
+  height: 100px;
   width: auto;
   flex-shrink: 0;
-  filter: drop-shadow(0 2px 12px rgba(239,0,96,.3));
 }
 
-.giro-hero-text { flex: 1; color: white; }
+.giro-hero-text { flex: 1; }
 
 .giro-hero-label {
   font-family: var(--font-display);
@@ -882,7 +869,7 @@ select.form-control { cursor: pointer; }
   font-weight: 700;
   letter-spacing: .15em;
   text-transform: uppercase;
-  color: var(--pink-light);
+  color: var(--text-muted);
   margin-bottom: .3rem;
 }
 
@@ -893,6 +880,7 @@ select.form-control { cursor: pointer; }
   text-transform: uppercase;
   letter-spacing: .02em;
   line-height: 1;
+  color: var(--header-dark);
   margin-bottom: .4rem;
 }
 
@@ -900,6 +888,6 @@ select.form-control { cursor: pointer; }
 
 .giro-hero-subtitle {
   font-size: .875rem;
-  color: rgba(255,255,255,.55);
+  color: var(--text-muted);
   letter-spacing: .02em;
 }
