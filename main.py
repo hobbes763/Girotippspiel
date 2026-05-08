@@ -99,19 +99,33 @@ async def etappe_detail(request: Request, num: int):
 
 
 @app.get("/giro", response_class=HTMLResponse)
-async def giro_gc(request: Request):
-    stages = load("stages.json")
+async def giro_fahrerliste(request: Request):
     riders = load("riders.json")
-    final = load("final.json")
-    riders_by_id = {r["id"]: r for r in riders}
-    gc = load("gc.json")
+
+    def split_name(name):
+        parts = name.split()
+        i = 0
+        while i < len(parts) and parts[i].isupper():
+            i += 1
+        if i == 0:
+            i = 1
+        return " ".join(parts[:i]), " ".join(parts[i:])
+
+    teams: dict = {}
+    for r in riders:
+        nachname, vorname = split_name(r["name"])
+        teams.setdefault(r["team"], []).append(
+            {**r, "nachname": nachname, "vorname": vorname}
+        )
+    for t in teams:
+        teams[t].sort(key=lambda x: (-x["wert"], x["nachname"]))
+
+    team_list = sorted(teams.items())
 
     return templates.TemplateResponse("giro.html", {
         "request": request,
-        "stages": sorted(stages, key=lambda s: s["num"]),
-        "gc": gc,
-        "riders_by_id": riders_by_id,
-        "final": final,
+        "team_list": team_list,
+        "total_riders": len(riders),
     })
 
 

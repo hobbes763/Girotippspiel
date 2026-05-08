@@ -2,8 +2,19 @@
 {% block title %}Rangliste – Bogos Giro Tippspiel 2026{% endblock %}
 {% block content %}
 
-<h1 class="page-title">🏆 Tippspiel Rangliste</h1>
-<p class="page-subtitle">Bogos Giro d'Italia 2026 &mdash; {{ stages_played }} von 21 Etappen gespielt</p>
+<!-- Giro Hero Banner -->
+<div class="giro-hero-banner">
+  <img
+    src="https://components2.rcsobjects.it/rcs_sport_giro2020-layout/v0/assets/img/ext/logo-giro.svg"
+    alt="Giro d'Italia"
+    class="giro-hero-logo"
+    onerror="this.style.display='none'"
+  >
+  <div class="giro-hero-text">
+<div class="giro-hero-title">Tippspiel <span class="pink">Rangliste</span></div>
+    <div class="giro-hero-subtitle">Giro d'Italia 2026 &mdash; {{ stages_played }} von 21 Etappen gespielt &mdash; 9. Mai–1. Juni 2026</div>
+  </div>
+</div>
 
 {% if standings %}
   <!-- Podium (top 3) -->
@@ -81,7 +92,7 @@
           <tr>
             <th>Spieler</th>
             {% for stage in stages %}
-            <th><a href="/etappe/{{ stage.num }}" style="color:var(--pink-dark)">E{{ stage.num }}</a></th>
+            <th><a href="/etappe/{{ stage.num }}" style="color:var(--purple)">E{{ stage.num }}</a></th>
             {% endfor %}
           </tr>
         </thead>
@@ -108,8 +119,7 @@
 {% else %}
   <div class="card" style="padding:3rem; text-align:center; color:var(--text-muted)">
     <div style="font-size:3rem;margin-bottom:1rem">🏁</div>
-    <h2 style="margin-bottom:.5rem">Noch keine Daten</h2>
-    <p>Zuerst <a href="/admin/fahrer" class="player-link">Fahrer erfassen</a>, dann <a href="/admin/spieler" class="player-link">Spieler-Teams zusammenstellen</a>.</p>
+    <h2>Noch keine Resultate.</h2>
   </div>
 {% endif %}
 

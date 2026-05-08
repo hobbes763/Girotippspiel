@@ -1,154 +1,36 @@
 {% extends "base.html" %}
-{% block title %}Giro d'Italia 2026 – Live GC{% endblock %}
+{% block title %}Starterliste – Bogos Giro Tippspiel 2026{% endblock %}
 {% block content %}
 
-<h1 class="page-title">🇮🇹 Giro d'Italia 2026</h1>
-<p class="page-subtitle">Aktuelle Gesamtwertungen (informativ)</p>
+<h1 class="page-title">Starterliste Giro d'Italia 2026</h1>
+<p class="page-subtitle">{{ total_riders }} Fahrer in {{ team_list|length }} Teams</p>
 
-{% if gc.updated %}
-<div class="alert alert-info">Stand: {{ gc.updated }}</div>
-{% endif %}
-
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;margin-bottom:1.5rem">
-
-  <!-- GC -->
-  {% if gc.gc %}
-  <div class="card">
-    <div class="card-header"><span class="jersey jersey-pink">Maglia Rosa</span> Gesamtwertung</div>
-    <ul class="result-list">
-      {% set gesamt_pts = [450,300,200,150,120,90,80,70,60,50] %}
-      {% for rid in gc.gc %}
-      {% if riders_by_id[rid] is defined %}
-      {% set rider = riders_by_id[rid] %}
-      {% set pos = loop.index %}
-      <li class="result-item">
-        <div class="result-pos {% if pos == 1 %}p1{% elif pos == 2 %}p2{% elif pos == 3 %}p3{% endif %}">{{ pos }}</div>
-        <div>
-          <div class="result-name">{{ rider.name }}</div>
-          <div class="result-team">{{ rider.team }}</div>
-        </div>
-        <div class="result-pts" style="color:var(--text-muted);font-size:.8rem">{{ gesamt_pts[pos-1] if pos <= 10 else 0 }} Endpkt</div>
-      </li>
-      {% endif %}
-      {% endfor %}
-    </ul>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.25rem;margin-top:1.5rem">
+  {% for team_name, riders in team_list %}
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-header" style="font-size:.85rem;letter-spacing:.04em">{{ team_name }}</div>
+    <table class="standings-table table-sm" style="margin:0">
+      <thead>
+        <tr>
+          <th style="text-align:left;padding-left:1rem">Nachname</th>
+          <th style="text-align:left">Vorname</th>
+          <th style="width:3.5rem">Wert</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in riders %}
+        <tr>
+          <td style="font-weight:600;padding-left:1rem">{{ r.nachname }}</td>
+          <td style="color:var(--text-muted)">{{ r.vorname }}</td>
+          <td style="text-align:center;font-variant-numeric:tabular-nums">
+            {{ "%.1f"|format(r.wert) }}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
-  {% endif %}
-
-  <!-- Berg -->
-  {% if gc.berg %}
-  <div class="card">
-    <div class="card-header"><span class="jersey jersey-dots">Berg</span> Bergwertung Gesamt</div>
-    <ul class="result-list">
-      {% set berg_pts = [180,100,75,50,40] %}
-      {% for rid in gc.berg %}
-      {% if riders_by_id[rid] is defined %}
-      {% set rider = riders_by_id[rid] %}
-      {% set pos = loop.index %}
-      <li class="result-item">
-        <div class="result-pos {% if pos == 1 %}p1{% elif pos == 2 %}p2{% elif pos == 3 %}p3{% endif %}">{{ pos }}</div>
-        <div>
-          <div class="result-name">{{ rider.name }}</div>
-          <div class="result-team">{{ rider.team }}</div>
-        </div>
-        <div class="result-pts" style="color:var(--text-muted);font-size:.8rem">{{ berg_pts[pos-1] if pos <= 5 else 0 }} Endpkt</div>
-      </li>
-      {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
-
-  <!-- Punkte -->
-  {% if gc.punkte %}
-  <div class="card">
-    <div class="card-header"><span class="jersey jersey-green">Punkte</span> Punktewertung Gesamt</div>
-    <ul class="result-list">
-      {% set punkte_pts = [180,100,75,50,40] %}
-      {% for rid in gc.punkte %}
-      {% if riders_by_id[rid] is defined %}
-      {% set rider = riders_by_id[rid] %}
-      {% set pos = loop.index %}
-      <li class="result-item">
-        <div class="result-pos {% if pos == 1 %}p1{% elif pos == 2 %}p2{% elif pos == 3 %}p3{% endif %}">{{ pos }}</div>
-        <div>
-          <div class="result-name">{{ rider.name }}</div>
-          <div class="result-team">{{ rider.team }}</div>
-        </div>
-        <div class="result-pts" style="color:var(--text-muted);font-size:.8rem">{{ punkte_pts[pos-1] if pos <= 5 else 0 }} Endpkt</div>
-      </li>
-      {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
-
-  <!-- Nachwuchs -->
-  {% if gc.nachwuchs %}
-  <div class="card">
-    <div class="card-header"><span class="jersey jersey-white">Weisses Trikot</span> Nachwuchswertung Gesamt</div>
-    <ul class="result-list">
-      {% set nw_pts = [120,80,50] %}
-      {% for rid in gc.nachwuchs %}
-      {% if riders_by_id[rid] is defined %}
-      {% set rider = riders_by_id[rid] %}
-      {% set pos = loop.index %}
-      <li class="result-item">
-        <div class="result-pos {% if pos == 1 %}p1{% elif pos == 2 %}p2{% elif pos == 3 %}p3{% endif %}">{{ pos }}</div>
-        <div>
-          <div class="result-name">{{ rider.name }}</div>
-          <div class="result-team">{{ rider.team }}</div>
-        </div>
-        <div class="result-pts" style="color:var(--text-muted);font-size:.8rem">{{ nw_pts[pos-1] if pos <= 3 else 0 }} Endpkt</div>
-      </li>
-      {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
-
-  <!-- Team Gesamt -->
-  {% if gc.team %}
-  <div class="card">
-    <div class="card-header"><span class="jersey jersey-blue">Team</span> Mannschaftswertung Gesamt</div>
-    <ul class="result-list">
-      {% set team_pts = [50,30,20] %}
-      {% for team in gc.team %}
-      {% set pos = loop.index %}
-      <li class="result-item">
-        <div class="result-pos {% if pos == 1 %}p1{% elif pos == 2 %}p2{% elif pos == 3 %}p3{% endif %}">{{ pos }}</div>
-        <div class="result-name">{{ team }}</div>
-        <div class="result-pts" style="color:var(--text-muted);font-size:.8rem">{{ team_pts[pos-1] if pos <= 3 else 0 }} Endpkt/Fahrer</div>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
-
-</div>
-
-{% if not gc.gc and not gc.berg and not gc.punkte %}
-<div class="card" style="padding:3rem;text-align:center;color:var(--text-muted)">
-  <div style="font-size:3rem;margin-bottom:1rem">🇮🇹</div>
-  <h2 style="margin-bottom:.5rem">Noch keine GC-Daten</h2>
-  <p>Der Giro startet am 9. Mai 2026. GC-Daten können im <a href="/admin/gc" class="player-link">Admin</a> eingetragen werden.</p>
-</div>
-{% endif %}
-
-<!-- Etappenliste -->
-{% if stages %}
-<div class="section-title">Bisherige Etappen</div>
-<div class="stage-nav">
-  {% for stage in stages %}
-  <a href="/etappe/{{ stage.num }}" class="stage-chip">
-    E{{ stage.num }}{% if stage.is_ttt %} TTT{% endif %} – {{ stage.name }}
-  </a>
   {% endfor %}
-</div>
-{% endif %}
-
-<div style="text-align:right;margin-top:1rem">
-  <a href="/admin/gc" class="btn btn-secondary btn-sm">✏️ GC aktualisieren</a>
 </div>
 
 {% endblock %}
