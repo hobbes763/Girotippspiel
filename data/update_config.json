@@ -1,7 +1,9 @@
 {
-  "last_updated": null,
-  "last_check": "2026-05-09T08:29:09",
+  "last_updated": "2026-05-09T19:16:09",
+  "last_check": "2026-05-09T19:21:25",
   "auto_update_enabled": true,
   "last_message": "Keine neuen Etappenresultate vorhanden.",
-  "stages_updated": []
+  "stages_updated": [
+    2
+  ]
 }
