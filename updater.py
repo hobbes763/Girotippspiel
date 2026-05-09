@@ -18,6 +18,7 @@ DATA_DIR = Path("data")
 CONFIG_FILE = DATA_DIR / "update_config.json"
 
 PCS_BASE = "https://www.procyclingstats.com/race/giro-d-italia/2026"
+GIRO_STAGE_BASE = "https://www.giroditalia.it/en/classifiche/di-tappa"
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -101,6 +102,36 @@ def match_team(team_pcs: str, known_teams: set) -> str:
     return best_t if best_s >= 0.72 else team_pcs
 
 
+# ── Giro Super Team ──────────────────────────────────────────────────────────
+
+def fetch_super_team_from_giro(stage_num: int, riders: list, known_teams: set) -> list:
+    """Super Team Fahrer von giroditalia.it holen. Gibt Liste der Rider-IDs zurück."""
+    url = f"{GIRO_STAGE_BASE}/{stage_num}/"
+    try:
+        resp = requests.get(url, headers=HEADERS, timeout=15)
+    except requests.RequestException:
+        return []
+    if resp.status_code != 200:
+        return []
+
+    soup = BeautifulSoup(resp.text, "lxml")
+    panel = soup.find(attrs={"data-category": "tab-classifica-CLSQA"})
+    if not panel:
+        return []
+
+    super_teams = set()
+    for line in panel.find_all("div", class_="line-table"):
+        if "display: none" in (line.get("style") or ""):
+            continue
+        link = line.find("a")
+        if link:
+            team_raw = link.get_text(strip=True)
+            matched = match_team(team_raw, known_teams)
+            super_teams.add(matched)
+
+    return [r["id"] for r in riders if r["team"] in super_teams]
+
+
 # ── PCS-Parsing ───────────────────────────────────────────────────────────────
 
 def _find_result_ul(soup: BeautifulSoup, *keywords: str) -> BeautifulSoup | None:
@@ -176,6 +207,7 @@ def fetch_stage_from_pcs(
     results = {
         "etappe": [], "leader": [], "berg": [],
         "punkte": [], "nachwuchs": [], "team_day": [], "ttt_order": [],
+        "super_team": [],
     }
 
     # 1. Etappenresultat (Top 12)
@@ -244,6 +276,9 @@ def fetch_stage_from_pcs(
                 results["team_day"] = _teams_from_ul(ul, 3, known_teams)
             break
 
+    # 7. Super Team von giroditalia.it
+    results["super_team"] = fetch_super_team_from_giro(stage_num, riders, known_teams)
+
     stage_data = {
         "num": stage_num,
         "date": route_stage.get("datum", ""),
@@ -253,7 +288,7 @@ def fetch_stage_from_pcs(
     }
 
     filled = sum(1 for v in results.values() if v)
-    return stage_data, f"E{stage_num} ({stage_data['name']}) importiert ({filled}/7 Felder)."
+    return stage_data, f"E{stage_num} ({stage_data['name']}) importiert ({filled}/8 Felder)."
 
 
 # ── Haupt-Update-Funktion ─────────────────────────────────────────────────────

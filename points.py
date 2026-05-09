@@ -5,6 +5,7 @@ PUNKTE = {1: 15, 2: 10, 3: 7, 4: 5, 5: 4}
 NACHWUCHS = {1: 10, 2: 7, 3: 5}
 TEAM_TAG = {1: 10, 2: 7, 3: 5}
 TTT = {1: 30, 2: 20, 3: 15, 4: 10}
+SUPER_TEAM = 10
 
 GESAMT = {1: 450, 2: 300, 3: 200, 4: 150, 5: 120, 6: 90, 7: 80, 8: 70, 9: 60, 10: 50}
 BERG_GESAMT = {1: 180, 2: 100, 3: 75, 4: 50, 5: 40}
@@ -23,38 +24,43 @@ def calc_stage_points(player_ids, riders_by_id, stage):
     r = stage.get("results", {})
     pts = dict(etappe=0, leader=0, berg=0, punkte=0, nachwuchs=0, team_tag=0, ttt=0)
 
-    player_teams = {get_rider_team(riders_by_id, rid) for rid in player_ids}
+    active_ids = {rid for rid in player_ids if not riders_by_id.get(rid, {}).get("aufgegeben", False)}
+    player_teams = {get_rider_team(riders_by_id, rid) for rid in active_ids}
 
     for pos, rid in enumerate(r.get("etappe", []), 1):
-        if rid in player_ids and pos in ETAPPE:
+        if rid in active_ids and pos in ETAPPE:
             pts["etappe"] += ETAPPE[pos]
 
     for pos, rid in enumerate(r.get("leader", []), 1):
-        if rid in player_ids and pos in LEADER:
+        if rid in active_ids and pos in LEADER:
             pts["leader"] += LEADER[pos]
 
     for pos, rid in enumerate(r.get("berg", []), 1):
-        if rid in player_ids and pos in BERG:
+        if rid in active_ids and pos in BERG:
             pts["berg"] += BERG[pos]
 
     for pos, rid in enumerate(r.get("punkte", []), 1):
-        if rid in player_ids and pos in PUNKTE:
+        if rid in active_ids and pos in PUNKTE:
             pts["punkte"] += PUNKTE[pos]
 
     for pos, rid in enumerate(r.get("nachwuchs", []), 1):
-        if rid in player_ids and pos in NACHWUCHS:
+        if rid in active_ids and pos in NACHWUCHS:
             pts["nachwuchs"] += NACHWUCHS[pos]
 
     for pos, team in enumerate(r.get("team_day", []), 1):
         if team in player_teams and pos in TEAM_TAG:
-            count = sum(1 for rid in player_ids if get_rider_team(riders_by_id, rid) == team)
+            count = sum(1 for rid in active_ids if get_rider_team(riders_by_id, rid) == team)
             pts["team_tag"] += TEAM_TAG[pos] * count
 
     if stage.get("is_ttt"):
         for pos, team in enumerate(r.get("ttt_order", []), 1):
             if team in player_teams and pos in TTT:
-                count = sum(1 for rid in player_ids if get_rider_team(riders_by_id, rid) == team)
+                count = sum(1 for rid in active_ids if get_rider_team(riders_by_id, rid) == team)
                 pts["ttt"] += TTT[pos] * count
+
+    for rid in r.get("super_team", []):
+        if rid in active_ids:
+            pts["team_tag"] += SUPER_TEAM
 
     return pts
 
@@ -64,31 +70,32 @@ def calc_final_points(player_ids, riders_by_id, final):
     if not final:
         return pts
 
-    player_teams = {get_rider_team(riders_by_id, rid) for rid in player_ids}
+    active_ids = {rid for rid in player_ids if not riders_by_id.get(rid, {}).get("aufgegeben", False)}
+    player_teams = {get_rider_team(riders_by_id, rid) for rid in active_ids}
 
     for pos, rid in enumerate(final.get("gesamt", []), 1):
-        if rid in player_ids and pos in GESAMT:
+        if rid in active_ids and pos in GESAMT:
             pts["gesamt"] += GESAMT[pos]
 
     for pos, rid in enumerate(final.get("berg_gesamt", []), 1):
-        if rid in player_ids and pos in BERG_GESAMT:
+        if rid in active_ids and pos in BERG_GESAMT:
             pts["berg_gesamt"] += BERG_GESAMT[pos]
 
     for pos, rid in enumerate(final.get("punkte_gesamt", []), 1):
-        if rid in player_ids and pos in PUNKTE_GESAMT:
+        if rid in active_ids and pos in PUNKTE_GESAMT:
             pts["punkte_gesamt"] += PUNKTE_GESAMT[pos]
 
     for pos, rid in enumerate(final.get("nachwuchs_gesamt", []), 1):
-        if rid in player_ids and pos in NACHWUCHS_GESAMT:
+        if rid in active_ids and pos in NACHWUCHS_GESAMT:
             pts["nachwuchs_gesamt"] += NACHWUCHS_GESAMT[pos]
 
     for pos, team in enumerate(final.get("team_gesamt", []), 1):
         if team in player_teams and pos in TEAM_GESAMT:
-            count = sum(1 for rid in player_ids if get_rider_team(riders_by_id, rid) == team)
+            count = sum(1 for rid in active_ids if get_rider_team(riders_by_id, rid) == team)
             pts["team_gesamt"] += TEAM_GESAMT[pos] * count
 
     for rid in final.get("finishers", []):
-        if rid in player_ids:
+        if rid in active_ids:
             pts["ankunft"] += ANKUNFT
 
     return pts
@@ -141,44 +148,48 @@ def calculate_standings(players, riders, stages, final=None):
 def calculate_all_rider_points(riders, stages, final=None):
     riders_by_id = {r["id"]: r for r in riders}
     all_ids = {r["id"] for r in riders}
+    active_ids = {r["id"] for r in riders if not r.get("aufgegeben", False)}
 
-    rider_pts = {rid: dict(etappe=0, leader=0, berg=0, punkte=0, nachwuchs=0,
+    rider_pts = {rid: dict(etappe=0, leader=0, berg=0, punkte=0, nachwuchs=0, team_tag=0,
                            gesamt=0, berg_gesamt=0, punkte_gesamt=0, nachwuchs_gesamt=0, ankunft=0)
                  for rid in all_ids}
 
     for stage in stages:
         r = stage.get("results", {})
         for pos, rid in enumerate(r.get("etappe", []), 1):
-            if rid in all_ids and pos in ETAPPE:
+            if rid in active_ids and pos in ETAPPE:
                 rider_pts[rid]["etappe"] += ETAPPE[pos]
         for pos, rid in enumerate(r.get("leader", []), 1):
-            if rid in all_ids and pos in LEADER:
+            if rid in active_ids and pos in LEADER:
                 rider_pts[rid]["leader"] += LEADER[pos]
         for pos, rid in enumerate(r.get("berg", []), 1):
-            if rid in all_ids and pos in BERG:
+            if rid in active_ids and pos in BERG:
                 rider_pts[rid]["berg"] += BERG[pos]
         for pos, rid in enumerate(r.get("punkte", []), 1):
-            if rid in all_ids and pos in PUNKTE:
+            if rid in active_ids and pos in PUNKTE:
                 rider_pts[rid]["punkte"] += PUNKTE[pos]
         for pos, rid in enumerate(r.get("nachwuchs", []), 1):
-            if rid in all_ids and pos in NACHWUCHS:
+            if rid in active_ids and pos in NACHWUCHS:
                 rider_pts[rid]["nachwuchs"] += NACHWUCHS[pos]
+        for rid in r.get("super_team", []):
+            if rid in active_ids:
+                rider_pts[rid]["team_tag"] += SUPER_TEAM
 
     if final:
         for pos, rid in enumerate(final.get("gesamt", []), 1):
-            if rid in all_ids and pos in GESAMT:
+            if rid in active_ids and pos in GESAMT:
                 rider_pts[rid]["gesamt"] += GESAMT[pos]
         for pos, rid in enumerate(final.get("berg_gesamt", []), 1):
-            if rid in all_ids and pos in BERG_GESAMT:
+            if rid in active_ids and pos in BERG_GESAMT:
                 rider_pts[rid]["berg_gesamt"] += BERG_GESAMT[pos]
         for pos, rid in enumerate(final.get("punkte_gesamt", []), 1):
-            if rid in all_ids and pos in PUNKTE_GESAMT:
+            if rid in active_ids and pos in PUNKTE_GESAMT:
                 rider_pts[rid]["punkte_gesamt"] += PUNKTE_GESAMT[pos]
         for pos, rid in enumerate(final.get("nachwuchs_gesamt", []), 1):
-            if rid in all_ids and pos in NACHWUCHS_GESAMT:
+            if rid in active_ids and pos in NACHWUCHS_GESAMT:
                 rider_pts[rid]["nachwuchs_gesamt"] += NACHWUCHS_GESAMT[pos]
         for rid in final.get("finishers", []):
-            if rid in all_ids:
+            if rid in active_ids:
                 rider_pts[rid]["ankunft"] += ANKUNFT
 
     result = []
@@ -195,6 +206,7 @@ def calculate_all_rider_points(riders, stages, final=None):
 def calculate_player_detail(player, riders, stages, final=None):
     riders_by_id = {r["id"]: r for r in riders}
     player_ids = set(player.get("rider_ids", []))
+    active_ids = {rid for rid in player_ids if not riders_by_id.get(rid, {}).get("aufgegeben", False)}
 
     rider_pts = {rid: dict(etappe=0, leader=0, berg=0, punkte=0, nachwuchs=0, team_tag=0, ttt=0,
                            gesamt=0, berg_gesamt=0, punkte_gesamt=0, nachwuchs_gesamt=0,
@@ -202,62 +214,66 @@ def calculate_player_detail(player, riders, stages, final=None):
 
     for stage in stages:
         r = stage.get("results", {})
-        player_teams = {get_rider_team(riders_by_id, rid) for rid in player_ids}
+        active_teams = {get_rider_team(riders_by_id, rid) for rid in active_ids}
 
         for pos, rid in enumerate(r.get("etappe", []), 1):
-            if rid in player_ids and pos in ETAPPE:
+            if rid in active_ids and pos in ETAPPE:
                 rider_pts[rid]["etappe"] += ETAPPE[pos]
 
         for pos, rid in enumerate(r.get("leader", []), 1):
-            if rid in player_ids and pos in LEADER:
+            if rid in active_ids and pos in LEADER:
                 rider_pts[rid]["leader"] += LEADER[pos]
 
         for pos, rid in enumerate(r.get("berg", []), 1):
-            if rid in player_ids and pos in BERG:
+            if rid in active_ids and pos in BERG:
                 rider_pts[rid]["berg"] += BERG[pos]
 
         for pos, rid in enumerate(r.get("punkte", []), 1):
-            if rid in player_ids and pos in PUNKTE:
+            if rid in active_ids and pos in PUNKTE:
                 rider_pts[rid]["punkte"] += PUNKTE[pos]
 
         for pos, rid in enumerate(r.get("nachwuchs", []), 1):
-            if rid in player_ids and pos in NACHWUCHS:
+            if rid in active_ids and pos in NACHWUCHS:
                 rider_pts[rid]["nachwuchs"] += NACHWUCHS[pos]
 
         for pos, team in enumerate(r.get("team_day", []), 1):
-            if team in player_teams and pos in TEAM_TAG:
-                for rid in player_ids:
+            if team in active_teams and pos in TEAM_TAG:
+                for rid in active_ids:
                     if get_rider_team(riders_by_id, rid) == team:
                         rider_pts[rid]["team_tag"] += TEAM_TAG[pos]
 
         if stage.get("is_ttt"):
             for pos, team in enumerate(r.get("ttt_order", []), 1):
-                if team in player_teams and pos in TTT:
-                    for rid in player_ids:
+                if team in active_teams and pos in TTT:
+                    for rid in active_ids:
                         if get_rider_team(riders_by_id, rid) == team:
                             rider_pts[rid]["ttt"] += TTT[pos]
 
+        for rid in r.get("super_team", []):
+            if rid in active_ids:
+                rider_pts[rid]["team_tag"] += SUPER_TEAM
+
     if final:
-        player_teams = {get_rider_team(riders_by_id, rid) for rid in player_ids}
+        active_teams = {get_rider_team(riders_by_id, rid) for rid in active_ids}
         for pos, rid in enumerate(final.get("gesamt", []), 1):
-            if rid in player_ids and pos in GESAMT:
+            if rid in active_ids and pos in GESAMT:
                 rider_pts[rid]["gesamt"] += GESAMT[pos]
         for pos, rid in enumerate(final.get("berg_gesamt", []), 1):
-            if rid in player_ids and pos in BERG_GESAMT:
+            if rid in active_ids and pos in BERG_GESAMT:
                 rider_pts[rid]["berg_gesamt"] += BERG_GESAMT[pos]
         for pos, rid in enumerate(final.get("punkte_gesamt", []), 1):
-            if rid in player_ids and pos in PUNKTE_GESAMT:
+            if rid in active_ids and pos in PUNKTE_GESAMT:
                 rider_pts[rid]["punkte_gesamt"] += PUNKTE_GESAMT[pos]
         for pos, rid in enumerate(final.get("nachwuchs_gesamt", []), 1):
-            if rid in player_ids and pos in NACHWUCHS_GESAMT:
+            if rid in active_ids and pos in NACHWUCHS_GESAMT:
                 rider_pts[rid]["nachwuchs_gesamt"] += NACHWUCHS_GESAMT[pos]
         for pos, team in enumerate(final.get("team_gesamt", []), 1):
-            if team in player_teams and pos in TEAM_GESAMT:
-                for rid in player_ids:
+            if team in active_teams and pos in TEAM_GESAMT:
+                for rid in active_ids:
                     if get_rider_team(riders_by_id, rid) == team:
                         rider_pts[rid]["team_gesamt"] += TEAM_GESAMT[pos]
         for rid in final.get("finishers", []):
-            if rid in player_ids:
+            if rid in active_ids:
                 rider_pts[rid]["ankunft"] += ANKUNFT
 
     result = []
