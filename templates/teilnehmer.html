@@ -42,9 +42,9 @@
             {% for r in active_riders %}
             {% set wsum.v = wsum.v + r.wert %}
             {% set rpts = rider_pts_by_id.get(r.id, 0) %}
-            <tr>
+            <tr{% if r.aufgegeben %} style="background:rgba(206,43,55,0.08)"{% endif %}>
               <td style="padding-left:1rem;color:var(--text-muted);font-size:.85rem">{{ loop.index }}</td>
-              <td style="font-weight:600">{{ r.name }}</td>
+              <td style="font-weight:600">{{ r.name }}{% if r.aufgegeben %} <span style="font-size:.72rem;font-weight:700;color:var(--red)">DNF</span>{% endif %}</td>
               <td style="color:var(--text-muted);font-size:.85rem">{{ r.team }}</td>
               <td style="text-align:center;font-variant-numeric:tabular-nums">{{ "%.1f"|format(r.wert) }}</td>
               <td style="text-align:center;font-variant-numeric:tabular-nums">

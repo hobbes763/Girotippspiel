@@ -57,8 +57,8 @@
       <tbody>
         {% for rd in rider_details %}
         {% set p = rd.pts %}
-        <tr>
-          <td style="font-weight:600">{{ rd.rider.name }}</td>
+        <tr{% if rd.rider.aufgegeben %} style="background:rgba(206,43,55,0.08)"{% endif %}>
+          <td style="font-weight:600">{{ rd.rider.name }}{% if rd.rider.aufgegeben %} <span style="font-size:.72rem;font-weight:700;color:var(--red)">DNF</span>{% endif %}</td>
           <td style="color:var(--text-muted);font-size:.85rem">{{ rd.rider.team }}</td>
           <td>{{ rd.rider.wert }}</td>
           <td>{% if p.etappe > 0 %}<span class="pts-positive">{{ p.etappe }}</span>{% else %}<span class="pts-zero">—</span>{% endif %}</td>

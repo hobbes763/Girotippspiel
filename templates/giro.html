@@ -24,10 +24,10 @@
       </thead>
       <tbody>
         {% for r in riders %}
-        <tr>
-          <td style="font-weight:600;padding-left:1rem">{{ r.nachname }}</td>
-          <td style="color:var(--text-muted)">{{ r.vorname }}</td>
-          <td style="text-align:center;font-variant-numeric:tabular-nums">
+        <tr{% if r.aufgegeben %} style="background:rgba(206,43,55,0.08)"{% endif %}>
+          <td style="font-weight:600;padding-left:1rem;{% if r.aufgegeben %}color:var(--text-muted);text-decoration:line-through{% endif %}">{{ r.nachname }}</td>
+          <td style="color:var(--text-muted)">{{ r.vorname }}{% if r.aufgegeben %} <span style="font-size:.7rem;font-weight:700;color:var(--red)">DNF</span>{% endif %}</td>
+          <td style="text-align:center;font-variant-numeric:tabular-nums;color:{% if r.aufgegeben %}var(--text-muted){% else %}inherit{% endif %}">
             {{ "%.1f"|format(r.wert) }}
           </td>
         </tr>

@@ -36,9 +36,9 @@
         {% for entry in rider_points %}
         {% set pts = entry.pts %}
         {% set total = entry.total %}
-        <tr{% if total == 0 %} class="row-zero"{% endif %}>
+        <tr{% if entry.rider.aufgegeben %} style="background:rgba(206,43,55,0.08)"{% elif total == 0 %} class="row-zero"{% endif %}>
           <td style="text-align:right;color:var(--text-muted);font-size:.8rem">{{ loop.index }}</td>
-          <td style="text-align:left;font-weight:600">{{ entry.rider.name }}</td>
+          <td style="text-align:left;font-weight:600">{{ entry.rider.name }}{% if entry.rider.aufgegeben %} <span style="font-size:.72rem;font-weight:700;color:var(--red)">DNF</span>{% endif %}</td>
           <td style="text-align:left;color:var(--text-muted);font-size:.82rem" class="col-team">{{ entry.rider.team }}</td>
           <td>{% if pts.etappe %}{{ pts.etappe }}{% else %}<span class="zero">–</span>{% endif %}</td>
           <td>{% if pts.leader %}{{ pts.leader }}{% else %}<span class="zero">–</span>{% endif %}</td>

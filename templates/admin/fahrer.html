@@ -58,13 +58,17 @@
             <th style="text-align:left">Team</th>
             <th>Wert</th>
             <th>ID</th>
+            <th>DNF</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           {% for rider in riders %}
-          <tr>
-            <td style="font-weight:500">{{ rider.name }}</td>
+          <tr{% if rider.aufgegeben %} style="background:rgba(206,43,55,0.08)"{% endif %}>
+            <td style="font-weight:500">
+              {{ rider.name }}
+              {% if rider.aufgegeben %}<span style="font-size:.75rem;color:var(--red);font-weight:700;margin-left:.35rem">DNF</span>{% endif %}
+            </td>
             <td style="color:var(--text-muted);font-size:.85rem">{{ rider.team }}</td>
             <td>
               <span style="background:var(--pink-bg);color:var(--pink);padding:.1rem .4rem;border-radius:4px;font-size:.8rem;font-weight:700">
@@ -72,6 +76,14 @@
               </span>
             </td>
             <td style="color:var(--text-muted);font-size:.8rem">#{{ rider.id }}</td>
+            <td>
+              <form method="post" action="/admin/fahrer/toggle-aufgegeben" style="display:inline">
+                <input type="hidden" name="rider_id" value="{{ rider.id }}">
+                <button type="submit" class="btn btn-sm" style="{% if rider.aufgegeben %}background:var(--red);color:#fff{% else %}background:var(--border);color:var(--text){% endif %}">
+                  {% if rider.aufgegeben %}✓ DNF{% else %}– DNF{% endif %}
+                </button>
+              </form>
+            </td>
             <td>
               <form method="post" action="/admin/fahrer/delete" style="display:inline" onsubmit="return confirm('{{ rider.name }} wirklich löschen?')">
                 <input type="hidden" name="rider_id" value="{{ rider.id }}">
@@ -81,7 +93,7 @@
           </tr>
           {% else %}
           <tr>
-            <td colspan="5" style="text-align:center;color:var(--text-muted);padding:2rem">
+            <td colspan="6" style="text-align:center;color:var(--text-muted);padding:2rem">
               Noch keine Fahrer. Füge oben links Fahrer hinzu.
             </td>
           </tr>

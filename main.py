@@ -401,6 +401,18 @@ async def admin_fahrer_add(
     return RedirectResponse("/admin/fahrer", status_code=303)
 
 
+@app.post("/admin/fahrer/toggle-aufgegeben")
+async def admin_fahrer_toggle_aufgegeben(request: Request, rider_id: int = Form(...)):
+    if not _is_admin(request):
+        return RedirectResponse("/admin/login", status_code=302)
+    riders = load("riders.json")
+    for r in riders:
+        if r["id"] == rider_id:
+            r["aufgegeben"] = not r.get("aufgegeben", False)
+    save("riders.json", riders)
+    return RedirectResponse("/admin/fahrer", status_code=303)
+
+
 @app.post("/admin/fahrer/delete")
 async def admin_fahrer_delete(request: Request, rider_id: int = Form(...)):
     if not _is_admin(request):
