@@ -310,8 +310,8 @@ def check_and_update() -> dict:
     today = date.today().isoformat()
     staged_nums = {s["num"] for s in stages}
 
-    # Etappen die abgeschlossen sein sollten (Datum < heute, noch nicht in stages.json)
-    missing = [r for r in route if r["datum"] < today and r["num"] not in staged_nums]
+    # Etappen die abgeschlossen sein sollten (Datum <= heute, noch nicht in stages.json)
+    missing = [r for r in route if r["datum"] <= today and r["num"] not in staged_nums]
 
     if not missing:
         cfg["last_message"] = "Keine neuen Etappenresultate vorhanden."
