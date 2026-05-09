@@ -282,11 +282,11 @@ a { color: inherit; text-decoration: none; }
 .total-pts {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 1.1rem;
-  color: var(--pink);
+  font-size: 1.42rem;
+  color: var(--green);
 }
 
-.pts-positive { color: var(--green); font-weight: 700; }
+.pts-positive { color: #94a394; font-size: .8rem; font-weight: 500; }
 .pts-zero { color: var(--border); }
 
 /* ─────────────────────────────────────────────
@@ -944,6 +944,50 @@ select.form-control { cursor: pointer; }
 }
 
 /* ─────────────────────────────────────────────
+   ETAPPE STRIP (einzeilig, Rangliste)
+   ───────────────────────────────────────────── */
+.etappe-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .5rem;
+  background: var(--white);
+  border-radius: var(--radius);
+  border-left: 4px solid var(--pink);
+  box-shadow: var(--card-shadow);
+  padding: .6rem 1.1rem;
+  margin-bottom: 1.5rem;
+  font-size: .875rem;
+}
+
+.etappe-strip-label {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: .78rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--pink);
+}
+
+.etappe-strip-num {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.etappe-strip-sep {
+  color: var(--border);
+}
+
+.etappe-strip-route {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.etappe-strip-km {
+  color: var(--text-muted);
+}
+
+/* ─────────────────────────────────────────────
    TAGESETAPPEN (Startseite)
    ───────────────────────────────────────────── */
 .tagesetappen-row {
@@ -1022,3 +1066,174 @@ select.form-control { cursor: pointer; }
 
 .tagesetappe-sterne { display: flex; gap: 1px; }
 .tagesetappe-sterne .stern { font-size: 1rem; }
+
+/* ─────────────────────────────────────────────
+   TEILNEHMER
+   ───────────────────────────────────────────── */
+.teilnehmer-layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  margin-top: 1.5rem;
+}
+
+.teilnehmer-nav {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(0,0,0,.05);
+  overflow: hidden;
+  position: sticky;
+  top: 100px;
+}
+
+.teilnehmer-nav-link {
+  display: block;
+  padding: .6rem 1rem;
+  font-size: .9rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  transition: background .15s, color .15s;
+}
+.teilnehmer-nav-link:last-child { border-bottom: none; }
+.teilnehmer-nav-link:hover { background: var(--pink-bg); color: var(--pink); }
+.teilnehmer-nav-link.active { background: var(--pink); color: #fff; font-weight: 700; }
+
+@media (max-width: 700px) {
+  .teilnehmer-layout { grid-template-columns: 1fr; }
+  .teilnehmer-nav { position: static; display: flex; flex-wrap: wrap; gap: .25rem; padding: .5rem; }
+  .teilnehmer-nav-link { border-bottom: none; border-radius: 6px; padding: .35rem .75rem; }
+}
+
+/* ─────────────────────────────────────────────
+   SUBTAB NAVIGATION
+   ───────────────────────────────────────────── */
+.subtab-nav {
+  display: flex;
+  gap: .5rem;
+  margin: 1.25rem 0 0;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 0;
+}
+
+.subtab {
+  font-family: var(--font-display);
+  font-size: .95rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  padding: .5rem 1.25rem;
+  border-radius: 6px 6px 0 0;
+  color: var(--text-muted);
+  border: 2px solid transparent;
+  border-bottom: none;
+  margin-bottom: -2px;
+  transition: color .15s, background .15s;
+}
+
+.subtab:hover { color: var(--pink); background: var(--pink-bg); }
+
+.subtab.active {
+  color: var(--pink);
+  background: var(--white);
+  border-color: var(--border);
+  border-bottom-color: var(--white);
+}
+
+/* Punkte-Tabelle: Hilfsspalten auf kleinen Screens ausblenden */
+.row-zero td { opacity: .45; }
+.zero { color: var(--border); }
+
+@media (max-width: 900px) {
+  .col-gc { display: none; }
+}
+@media (max-width: 650px) {
+  .col-team { display: none; }
+  .col-nachwuchs { display: none; }
+}
+
+/* ─────────────────────────────────────────────
+   PUNKTE PRO RUNDE TABELLE
+   ───────────────────────────────────────────── */
+.runden-table th,
+.runden-table td {
+  min-width: 2.8rem;
+  padding: .55rem .6rem;
+  font-size: .85rem;
+  text-align: center;
+}
+
+.runden-table th:first-child,
+.runden-table td:first-child {
+  text-align: left;
+  min-width: 8rem;
+  padding-left: 1rem;
+}
+
+.stage-th-link {
+  color: rgba(255,255,255,.8);
+  font-weight: 700;
+}
+.stage-th-link:hover { color: #fff; }
+
+.runden-best {
+  font-weight: 800;
+  font-size: .9rem;
+}
+
+.runden-zero { color: var(--border); }
+
+.runden-total {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.19rem;
+  color: var(--green);
+  border-left: 2px solid var(--border);
+}
+
+.runden-total-th {
+  font-weight: 800;
+  color: #fff !important;
+  border-left: 2px solid rgba(255,255,255,.2);
+}
+
+.runden-legende {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .65rem 1.25rem;
+  font-size: .78rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+}
+
+.runden-best-sample {
+  display: inline-block;
+  background: var(--pink-bg);
+  color: var(--pink-dark);
+  font-weight: 800;
+  font-size: .82rem;
+  padding: .1rem .45rem;
+  border: 2px solid var(--pink);
+  border-radius: 3px;
+}
+
+.runden-stage-cell {
+  font-size: .75rem;
+}
+
+.stage-trophy {
+  font-size: .8em;
+  margin-right: .1rem;
+  vertical-align: middle;
+}
+
+.runden-trophies {
+  font-size: .65rem;
+  margin-left: .3rem;
+  letter-spacing: -.05em;
+  vertical-align: middle;
+  opacity: .85;
+}

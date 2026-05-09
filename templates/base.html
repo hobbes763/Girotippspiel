@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Bogos Giro Tippspiel 2026{% endblock %}</title>
-  <link rel="stylesheet" href="/static/style.css?v=5">
+  <link rel="stylesheet" href="/static/style.css?v=6">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -41,8 +41,10 @@
       <div class="container nav-bar-inner">
         <nav class="main-nav">
           <a href="/" class="nav-link {% if request.url.path == '/' %}active{% endif %}">Rangliste</a>
+          <a href="/teilnehmer" class="nav-link {% if request.url.path.startswith('/teilnehmer') %}active{% endif %}">Teilnehmer</a>
+          <a href="/giro" class="nav-link {% if request.url.path.startswith('/giro') %}active{% endif %}">Fahrer</a>
           <a href="/etappenplan" class="nav-link {% if request.url.path == '/etappenplan' %}active{% endif %}">Etappenplan</a>
-          <a href="/giro" class="nav-link {% if request.url.path == '/giro' %}active{% endif %}">Fahrerliste</a>
+          <a href="/punktewertung" class="nav-link {% if request.url.path == '/punktewertung' %}active{% endif %}">Punktesystem</a>
           <a href="/admin" class="nav-link nav-admin">Admin</a>
         </nav>
       </div>

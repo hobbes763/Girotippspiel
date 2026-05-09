@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Punkte pro Fahrer – Bogos Giro Tippspiel 2026{% endblock %}
+{% block content %}
+
+<h1 class="page-title">Fahrer Giro d'Italia 2026</h1>
+<p class="page-subtitle">{{ total_riders }} Fahrer – Punkte pro Fahrer</p>
+
+<div class="subtab-nav">
+  <a href="/giro" class="subtab">Fahrerliste</a>
+  <a href="/giro/punkte" class="subtab active">Punkte pro Fahrer</a>
+</div>
+
+<div class="card" style="margin-top:1.5rem;padding:0;overflow:hidden">
+  <div class="card-header">Punkte pro Fahrer</div>
+  <div style="overflow-x:auto">
+    <table class="standings-table">
+      <thead>
+        <tr>
+          <th style="text-align:right;width:2.5rem">#</th>
+          <th style="text-align:left">Fahrer</th>
+          <th style="text-align:left" class="col-team">Team</th>
+          <th title="Etappenplatzierungen">Etappe</th>
+          <th title="Leader-Trikot pro Etappe">Leader</th>
+          <th title="Berg-Trikot pro Etappe">Berg</th>
+          <th title="Punkte-Trikot pro Etappe">Pkt.</th>
+          <th title="Nachwuchs-Trikot pro Etappe" class="col-nachwuchs">Nwchs.</th>
+          <th title="GC Gesamt-Endwertung" class="col-gc">GC</th>
+          <th title="Berg Gesamt-Endwertung" class="col-gc">Berg&nbsp;GC</th>
+          <th title="Punkte Gesamt-Endwertung" class="col-gc">Pkt.&nbsp;GC</th>
+          <th title="Nachwuchs Gesamt-Endwertung" class="col-gc col-nachwuchs">Nwchs.&nbsp;GC</th>
+          <th title="Ankunft Roma (30 Pkt.)" class="col-gc">Roma</th>
+          <th style="font-weight:800;color:var(--pink)">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for entry in rider_points %}
+        {% set pts = entry.pts %}
+        {% set total = entry.total %}
+        <tr{% if total == 0 %} class="row-zero"{% endif %}>
+          <td style="text-align:right;color:var(--text-muted);font-size:.8rem">{{ loop.index }}</td>
+          <td style="text-align:left;font-weight:600">{{ entry.rider.name }}</td>
+          <td style="text-align:left;color:var(--text-muted);font-size:.82rem" class="col-team">{{ entry.rider.team }}</td>
+          <td>{% if pts.etappe %}{{ pts.etappe }}{% else %}<span class="zero">–</span>{% endif %}</td>
+          <td>{% if pts.leader %}{{ pts.leader }}{% else %}<span class="zero">–</span>{% endif %}</td>
+          <td>{% if pts.berg %}{{ pts.berg }}{% else %}<span class="zero">–</span>{% endif %}</td>
+          <td>{% if pts.punkte %}{{ pts.punkte }}{% else %}<span class="zero">–</span>{% endif %}</td>
+          <td class="col-nachwuchs">{% if pts.nachwuchs %}{{ pts.nachwuchs }}{% else %}<span class="zero">–</span>{% endif %}</td>
+          <td class="col-gc">{% if pts.gesamt %}{{ pts.gesamt }}{% else %}<span class="zero">–</span>{% endif %}</td>
+          <td class="col-gc">{% if pts.berg_gesamt %}{{ pts.berg_gesamt }}{% else %}<span class="zero">–</span>{% endif %}</td>
+          <td class="col-gc">{% if pts.punkte_gesamt %}{{ pts.punkte_gesamt }}{% else %}<span class="zero">–</span>{% endif %}</td>
+          <td class="col-gc col-nachwuchs">{% if pts.nachwuchs_gesamt %}{{ pts.nachwuchs_gesamt }}{% else %}<span class="zero">–</span>{% endif %}</td>
+          <td class="col-gc">{% if pts.ankunft %}{{ pts.ankunft }}{% else %}<span class="zero">–</span>{% endif %}</td>
+          <td class="{% if total > 0 %}total-pts{% endif %}" style="{% if total == 0 %}color:var(--text-muted);font-weight:800{% endif %}">
+            {% if total %}{{ total }}{% else %}0{% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

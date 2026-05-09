@@ -1,9 +1,14 @@
 {% extends "base.html" %}
-{% block title %}Starterliste – Bogos Giro Tippspiel 2026{% endblock %}
+{% block title %}Fahrer – Bogos Giro Tippspiel 2026{% endblock %}
 {% block content %}
 
-<h1 class="page-title">Starterliste Giro d'Italia 2026</h1>
+<h1 class="page-title">Fahrer Giro d'Italia 2026</h1>
 <p class="page-subtitle">{{ total_riders }} Fahrer in {{ team_list|length }} Teams</p>
+
+<div class="subtab-nav">
+  <a href="/giro" class="subtab active">Fahrerliste</a>
+  <a href="/giro/punkte" class="subtab">Punkte pro Fahrer</a>
+</div>
 
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.25rem;margin-top:1.5rem">
   {% for team_name, riders in team_list %}

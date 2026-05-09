@@ -1,55 +1,194 @@
-﻿{% extends "base.html" %}
+{% extends "base.html" %}
 {% block title %}Admin – Bogos Giro Tippspiel 2026{% endblock %}
 {% block content %}
 
-<div class="admin-header">
-  <h1 style="font-size:1.5rem;font-weight:800;margin-bottom:.25rem">⚙️ Admin-Bereich</h1>
-  <p style="opacity:.7;font-size:.9rem">Bogos Giro Tippspiel 2026</p>
+<style>
+/* Update-Karte */
+.update-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.update-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-bottom: 1rem;
+}
+.update-title {
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.update-meta {
+  font-size: .78rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.update-meta strong {
+  color: var(--text);
+}
+.update-msg {
+  font-size: .82rem;
+  color: var(--text-muted);
+  margin-top: .5rem;
+  padding: .5rem .75rem;
+  background: rgba(255,255,255,.04);
+  border-radius: 6px;
+  border-left: 3px solid var(--pink);
+  word-break: break-word;
+}
+.update-msg.success {
+  border-left-color: #22c55e;
+  color: #86efac;
+}
+.update-msg.neutral {
+  border-left-color: var(--text-muted);
+}
+
+/* Toggle Switch */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: .75rem;
+  padding-top: .75rem;
+  border-top: 1px solid var(--border);
+}
+.toggle-label {
+  font-size: .85rem;
+  color: var(--text-muted);
+}
+.toggle-label strong {
+  color: var(--text);
+  display: block;
+  font-size: .9rem;
+}
+.toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+.toggle-status {
+  font-size: .78rem;
+  font-weight: 600;
+}
+.toggle-status.on  { color: #22c55e; }
+.toggle-status.off { color: var(--text-muted); }
+
+/* CSS Toggle */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+  position: absolute; inset: 0;
+  background: rgba(255,255,255,.1);
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background .2s;
+}
+.slider:before {
+  content: "";
+  position: absolute;
+  width: 18px; height: 18px;
+  left: 3px; bottom: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform .2s;
+}
+input:checked + .slider { background: #22c55e; }
+input:checked + .slider:before { transform: translateX(20px); }
+
+/* Logout link */
+.admin-logout {
+  font-size: .8rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-left: auto;
+}
+.admin-logout:hover { color: var(--pink); }
+</style>
+
+<div class="admin-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
+  <div>
+    <h1 style="font-size:1.5rem;font-weight:800;margin-bottom:.25rem">⚙️ Admin-Bereich</h1>
+    <p style="opacity:.7;font-size:.9rem">Bogos Giro Tippspiel 2026</p>
+  </div>
+  <a href="/admin/logout" class="btn btn-secondary" style="font-size:.8rem">Ausloggen</a>
 </div>
 
-<div class="admin-grid">
-  <a href="/admin/fahrer" class="admin-card" style="text-decoration:none">
-    <div class="admin-card-title">🚴 Fahrer</div>
-    <div class="admin-card-count">{{ rider_count }}</div>
-    <div style="font-size:.8rem;color:var(--text-muted);margin-top:.25rem">Fahrerliste verwalten</div>
-  </a>
-  <a href="/admin/spieler" class="admin-card" style="text-decoration:none">
-    <div class="admin-card-title">👥 Spieler</div>
-    <div class="admin-card-count">{{ player_count }}</div>
-    <div style="font-size:.8rem;color:var(--text-muted);margin-top:.25rem">Teams zusammenstellen</div>
-  </a>
-  <a href="/admin/etappe/1" class="admin-card" style="text-decoration:none">
-    <div class="admin-card-title">📅 Etappen</div>
-    <div class="admin-card-count">{{ stage_count }}</div>
-    <div style="font-size:.8rem;color:var(--text-muted);margin-top:.25rem">Ergebnisse eintragen</div>
-  </a>
-  <a href="/admin/gc" class="admin-card" style="text-decoration:none">
-    <div class="admin-card-title">🇮🇹 Giro GC</div>
-    <div class="admin-card-count">GC</div>
-    <div style="font-size:.8rem;color:var(--text-muted);margin-top:.25rem">Gesamtwertung aktualisieren</div>
-  </a>
-  <a href="/admin/final" class="admin-card" style="text-decoration:none">
-    <div class="admin-card-title">🏆 Endboni</div>
-    <div class="admin-card-count">Final</div>
-    <div style="font-size:.8rem;color:var(--text-muted);margin-top:.25rem">Schlussboni eintragen</div>
-  </a>
+<!-- ── Aktualisierungs-Karte ───────────────────────────────────────────── -->
+<div class="update-card">
+  <div class="update-card-header">
+    <div class="update-title">🔄 Punktetabelle aktualisieren</div>
+    <form method="post" action="/admin/update">
+      <button class="btn btn-primary" type="submit" style="white-space:nowrap">
+        Jetzt prüfen & aktualisieren
+      </button>
+    </form>
+  </div>
+
+  <div class="update-meta">
+    <div>
+      <strong>Letzte Prüfung:</strong>
+      {% if cfg.last_check %}
+        {{ cfg.last_check | replace("T", " ") }} Uhr
+      {% else %}
+        —
+      {% endif %}
+    </div>
+    <div>
+      <strong>Letzte Aktualisierung:</strong>
+      {% if cfg.last_updated %}
+        {{ cfg.last_updated | replace("T", " ") }} Uhr
+      {% else %}
+        —
+      {% endif %}
+    </div>
+  </div>
+
+  {% if update_flash %}
+    {% if update_count and update_count > 0 %}
+      <div class="update-msg success">✅ {{ update_flash }}</div>
+    {% else %}
+      <div class="update-msg neutral">ℹ️ {{ update_flash }}</div>
+    {% endif %}
+  {% elif cfg.last_message %}
+    <div class="update-msg neutral">{{ cfg.last_message }}</div>
+  {% endif %}
+
+  <!-- Auto-Update Toggle -->
+  <div class="toggle-row">
+    <div class="toggle-label">
+      <strong>Automatische Aktualisierung</strong>
+      Täglich um 18:00 und 18:30 Uhr
+    </div>
+    <div class="toggle-wrap">
+      <span class="toggle-status {% if cfg.auto_update_enabled %}on{% else %}off{% endif %}">
+        {% if cfg.auto_update_enabled %}EIN{% else %}AUS{% endif %}
+      </span>
+      <form method="post" action="/admin/toggle-auto-update">
+        <label class="switch" title="Auto-Update umschalten">
+          <input type="checkbox"
+                 {% if cfg.auto_update_enabled %}checked{% endif %}
+                 onchange="this.form.submit()">
+          <span class="slider"></span>
+        </label>
+      </form>
+    </div>
+  </div>
 </div>
 
-<div class="section-title">Etappenresultate eintragen</div>
-<div class="stage-nav">
-  {% for n in range(1, 22) %}
-  <a href="/admin/etappe/{{ n }}" class="stage-chip {% if n <= stage_count %}active{% endif %}">
-    E{{ n }}
-  </a>
-  {% endfor %}
-</div>
-
-<div class="section-title">Schnelllinks</div>
-<div style="display:flex;gap:.75rem;flex-wrap:wrap">
-  <a href="/" class="btn btn-secondary">🏆 Zur Rangliste</a>
-  <a href="/giro" class="btn btn-secondary">🇮🇹 Giro GC</a>
-  <a href="/admin/fahrer" class="btn btn-primary">+ Fahrer hinzufügen</a>
-  <a href="/admin/spieler" class="btn btn-primary">+ Spieler verwalten</a>
-</div>
 
 {% endblock %}

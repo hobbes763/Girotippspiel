@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block title %}Punktewertung – Bogos Giro Tippspiel 2026{% endblock %}
+{% block content %}
+
+<h1 class="page-title">Punktewertung</h1>
+<p class="page-subtitle">Giro d'Italia 2026 – Tippspiel-Wertungssystem</p>
+
+<!-- Pro Etappe -->
+<h2 class="section-title" style="margin-top:1.75rem">Pro Etappe</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-top:.75rem">
+
+  <!-- Etappenwertung -->
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-header">🏁 Etappenwertung</div>
+    <table class="standings-table table-sm" style="margin:0">
+      <thead><tr><th>Platz</th><th>Punkte</th></tr></thead>
+      <tbody>
+        {% for platz, punkte in [('1.','120'),('2.','80'),('3.','70'),('4.','60'),('5.','50'),('6.','40'),('7.','35'),('8.','30'),('9.','25'),('10.','20'),('11.','10'),('12.','8')] %}
+        <tr><td>{{ platz }}</td><td class="pts-positive">{{ punkte }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Leader-Trikot -->
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-header">🩷 Leader-Trikot (Maglia Rosa)</div>
+    <table class="standings-table table-sm" style="margin:0">
+      <thead><tr><th>Platz</th><th>Punkte</th></tr></thead>
+      <tbody>
+        {% for platz, punkte in [('1.','30'),('2.','20'),('3.','15'),('4.','12'),('5.','12'),('6.','9'),('7.','8'),('8.','8'),('9.','7'),('10.','6')] %}
+        <tr><td>{{ platz }}</td><td class="pts-positive">{{ punkte }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Berg + Punkte Trikot -->
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-header">🟣 Berg- &amp; Punkte-Trikot <small style="font-weight:400;font-size:.8rem">(je separat)</small></div>
+    <table class="standings-table table-sm" style="margin:0">
+      <thead><tr><th>Platz</th><th>Punkte</th></tr></thead>
+      <tbody>
+        {% for platz, punkte in [('1.','15'),('2.','10'),('3.','7'),('4.','5'),('5.','4')] %}
+        <tr><td>{{ platz }}</td><td class="pts-positive">{{ punkte }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Nachwuchs Trikot -->
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-header">⚪ Nachwuchs-Trikot (Maglia Bianca)</div>
+    <table class="standings-table table-sm" style="margin:0">
+      <thead><tr><th>Platz</th><th>Punkte</th></tr></thead>
+      <tbody>
+        {% for platz, punkte in [('1.','10'),('2.','7'),('3.','5')] %}
+        <tr><td>{{ platz }}</td><td class="pts-positive">{{ punkte }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Team Tag -->
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-header">🔵 Team Tag <small style="font-weight:400;font-size:.8rem">(pro Fahrer im Team)</small></div>
+    <table class="standings-table table-sm" style="margin:0">
+      <thead><tr><th>Platz</th><th>Punkte</th></tr></thead>
+      <tbody>
+        {% for platz, punkte in [('1.','10'),('2.','7'),('3.','5')] %}
+        <tr><td>{{ platz }}</td><td class="pts-positive">{{ punkte }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mannschaftszeitfahren -->
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-header">⏱️ Mannschaftszeitfahren <small style="font-weight:400;font-size:.8rem">(pro Fahrer im Team)</small></div>
+    <table class="standings-table table-sm" style="margin:0">
+      <thead><tr><th>Platz</th><th>Punkte</th></tr></thead>
+      <tbody>
+        {% for platz, punkte in [('1.','30'),('2.','20'),('3.','15'),('4.','10')] %}
+        <tr><td>{{ platz }}</td><td class="pts-positive">{{ punkte }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- Endboni -->
+<h2 class="section-title" style="margin-top:2rem">Endboni (nach letzter Etappe)</h2>
+<p style="color:var(--text-muted);font-size:.875rem;margin:.25rem 0 .75rem">
+  Die täglichen Klassement-Boni entfallen nach der letzten Etappe. Dafür gibt es die grossen Endboni für alle Klassemente.
+</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-top:.75rem">
+
+  <!-- GC Gesamt -->
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-header">🏆 Gesamtwertung (GC)</div>
+    <table class="standings-table table-sm" style="margin:0">
+      <thead><tr><th>Platz</th><th>Punkte</th></tr></thead>
+      <tbody>
+        {% for platz, punkte in [('1.','450'),('2.','300'),('3.','200'),('4.','150'),('5.','120'),('6.','90'),('7.','80'),('8.','70'),('9.','60'),('10.','50')] %}
+        <tr><td>{{ platz }}</td><td class="pts-positive">{{ punkte }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Berg + Punkte Gesamt -->
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-header">🟣 Berg- &amp; Punkte-Gesamt <small style="font-weight:400;font-size:.8rem">(je separat)</small></div>
+    <table class="standings-table table-sm" style="margin:0">
+      <thead><tr><th>Platz</th><th>Punkte</th></tr></thead>
+      <tbody>
+        {% for platz, punkte in [('1.','180'),('2.','100'),('3.','75'),('4.','50'),('5.','40')] %}
+        <tr><td>{{ platz }}</td><td class="pts-positive">{{ punkte }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Nachwuchs Gesamt -->
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-header">⚪ Nachwuchs-Gesamt</div>
+    <table class="standings-table table-sm" style="margin:0">
+      <thead><tr><th>Platz</th><th>Punkte</th></tr></thead>
+      <tbody>
+        {% for platz, punkte in [('1.','120'),('2.','80'),('3.','50')] %}
+        <tr><td>{{ platz }}</td><td class="pts-positive">{{ punkte }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Team Gesamt -->
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-header">🔵 Team-Gesamt <small style="font-weight:400;font-size:.8rem">(pro Fahrer im Team)</small></div>
+    <table class="standings-table table-sm" style="margin:0">
+      <thead><tr><th>Platz</th><th>Punkte</th></tr></thead>
+      <tbody>
+        {% for platz, punkte in [('1.','50'),('2.','30'),('3.','20')] %}
+        <tr><td>{{ platz }}</td><td class="pts-positive">{{ punkte }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Ankunft Roma -->
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-header">🏁 Ankunft in Roma</div>
+    <table class="standings-table table-sm" style="margin:0">
+      <thead><tr><th></th><th>Punkte</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--text-muted)">Pro finishender Fahrer</td><td class="pts-positive">30</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+{% endblock %}

@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "num": 1,
+    "name": "Nessebar - Burgas",
+    "km": 147,
+    "type": "flat",
+    "is_ttt": false,
+    "results": {
+      "etappe": [108, 26, 89, 61, 40, 132, 115, 27, 64, 111, 110, 158],
+      "leader": [108, 26, 22, 89, 137, 159, 61, 40, 132, 115],
+      "berg": [137, 22, 106, 163],
+      "punkte": [108, 26, 89, 61, 40],
+      "nachwuchs": [108, 26, 159],
+      "team_day": ["Soudal Quick-Step", "Lidl - Trek", "NSN Cycling Team"]
+    }
+  }
+]

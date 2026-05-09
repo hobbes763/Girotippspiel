@@ -22,7 +22,7 @@
       </thead>
       <tbody>
         {% for s in route %}
-        <tr class="{% if s.datum == today %}etappe-today{% elif s.datum == tomorrow %}etappe-tomorrow{% endif %}">
+        <tr class="{% if s.datum == today %}etappe-today{% endif %}">
           <td style="text-align:center;font-family:var(--font-display);font-weight:800;font-size:1.1rem;color:var(--pink)">
             {{ s.num }}
           </td>

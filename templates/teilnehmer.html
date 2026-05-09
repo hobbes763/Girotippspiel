@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Teilnehmer – Bogos Giro Tippspiel 2026{% endblock %}
+{% block content %}
+
+<h1 class="page-title">Teilnehmer</h1>
+<p class="page-subtitle">{{ players|length }} Teilnehmer</p>
+
+<div class="teilnehmer-layout">
+
+  <!-- Left sidebar: player list -->
+  <nav class="teilnehmer-nav">
+    {% for p in players %}
+    <a href="/teilnehmer/{{ p.id }}"
+       class="teilnehmer-nav-link {% if active_id == p.id %}active{% endif %}">
+      {{ p.name }}
+    </a>
+    {% endfor %}
+  </nav>
+
+  <!-- Right content: selected player detail -->
+  <div class="teilnehmer-content">
+    {% if active_player %}
+
+    <div class="card" style="margin-bottom:1.25rem">
+      <div class="card-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
+        <span>🚴 {{ active_player.name }} — Fahrerauswahl</span>
+        <span style="font-family:var(--font-display);font-size:1.35rem;font-weight:800;color:var(--green);letter-spacing:.01em">{{ player_total }} Pkt</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="standings-table">
+          <thead>
+            <tr>
+              <th style="text-align:left;padding-left:1rem">#</th>
+              <th style="text-align:left">Fahrer</th>
+              <th style="text-align:left">Team</th>
+              <th>Wert</th>
+              <th>Punkte</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% set wsum = namespace(v=0) %}
+            {% for r in active_riders %}
+            {% set wsum.v = wsum.v + r.wert %}
+            {% set rpts = rider_pts_by_id.get(r.id, 0) %}
+            <tr>
+              <td style="padding-left:1rem;color:var(--text-muted);font-size:.85rem">{{ loop.index }}</td>
+              <td style="font-weight:600">{{ r.name }}</td>
+              <td style="color:var(--text-muted);font-size:.85rem">{{ r.team }}</td>
+              <td style="text-align:center;font-variant-numeric:tabular-nums">{{ "%.1f"|format(r.wert) }}</td>
+              <td style="text-align:center;font-variant-numeric:tabular-nums">
+                {% if rpts > 0 %}<span class="total-pts">{{ rpts }}</span>{% else %}<span class="pts-zero">—</span>{% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            <tr style="background:var(--pink-bg)">
+              <td colspan="3" style="font-weight:700;padding-left:1rem">Total</td>
+              <td style="text-align:center;font-weight:700;font-variant-numeric:tabular-nums">
+                {{ "%.1f"|format(wsum.v) }}
+              </td>
+              <td style="text-align:center;font-weight:800;color:var(--green);font-variant-numeric:tabular-nums">
+                {{ player_total }}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    {% else %}
+    <div class="card" style="text-align:center;padding:3rem 1rem;color:var(--text-muted)">
+      <p style="font-size:1.1rem">Wähle einen Teilnehmer aus der linken Navigation.</p>
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+
+{% endblock %}
