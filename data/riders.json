@@ -51,7 +51,8 @@
     "id": 9,
     "name": "BUITRAGO Santiago",
     "team": "Bahrain - Victorious",
-    "wert": 0.3
+    "wert": 0.3,
+    "aufgegeben": true
   },
   {
     "id": 10,
@@ -573,7 +574,8 @@
     "id": 96,
     "name": "MOSCHETTI Matteo",
     "team": "Pinarello Q36.5",
-    "wert": 0.6
+    "wert": 0.6,
+    "aufgegeben": true
   },
   {
     "id": 97,
@@ -621,7 +623,8 @@
     "id": 104,
     "name": "VLASOV Aleksandr",
     "team": "Red Bull - Bora - Hansgrohe",
-    "wert": 0.3
+    "wert": 0.3,
+    "aufgegeben": true
   },
   {
     "id": 105,
@@ -687,7 +690,8 @@
     "id": 115,
     "name": "ACKERMANN Pascal",
     "team": "Jayco AlUla",
-    "wert": 0.6
+    "wert": 0.6,
+    "aufgegeben": false
   },
   {
     "id": 116,
@@ -945,7 +949,8 @@
     "id": 158,
     "name": "SOLER Marc",
     "team": "UAE Team Emirates",
-    "wert": 0.3
+    "wert": 0.3,
+    "aufgegeben": true
   },
   {
     "id": 159,
@@ -957,7 +962,8 @@
     "id": 160,
     "name": "VINE Jay",
     "team": "UAE Team Emirates",
-    "wert": 0.5
+    "wert": 0.5,
+    "aufgegeben": true
   },
   {
     "id": 161,
@@ -1023,7 +1029,8 @@
     "id": 171,
     "name": "HOLTER Ådne",
     "team": "Uno-X Mobility",
-    "wert": 0.1
+    "wert": 0.1,
+    "aufgegeben": true
   },
   {
     "id": 172,

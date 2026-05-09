@@ -1,6 +1,6 @@
 """
-Automatische Aktualisierung der Etappenresultate via ProCyclingStats.
-Wird sowohl manuell (Admin-Button) als auch via Scheduler (18:00/18:30 Uhr) aufgerufen.
+Automatische Aktualisierung der Etappenresultate via giroditalia.it.
+Wird sowohl manuell (Admin-Button) als auch via Scheduler aufgerufen.
 """
 import json
 import logging
@@ -17,15 +17,15 @@ logger = logging.getLogger(__name__)
 DATA_DIR = Path("data")
 CONFIG_FILE = DATA_DIR / "update_config.json"
 
-PCS_BASE = "https://www.procyclingstats.com/race/giro-d-italia/2026"
 GIRO_STAGE_BASE = "https://www.giroditalia.it/en/classifiche/di-tappa"
+GIRO_GENERAL_URL = "https://www.giroditalia.it/en/classifiche/"
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/124.0.0.0 Safari/537.36"
     ),
-    "Accept-Language": "de,en;q=0.9",
+    "Accept-Language": "en,de;q=0.9",
 }
 
 
@@ -73,133 +73,104 @@ def _sim(a: str, b: str) -> float:
     return SequenceMatcher(None, a, b).ratio()
 
 
-def match_rider(name_pcs: str, riders: list) -> int | None:
-    """PCS-Fahrername zu interner ID matchen."""
-    norm = _norm(name_pcs)
+def match_rider(name_raw: str, riders: list) -> int | None:
+    """Fahrername zu interner ID matchen (exakt dann fuzzy)."""
+    norm = _norm(name_raw)
+    # Exakter Match
     for r in riders:
         if _norm(r["name"]) == norm:
             return r["id"]
+    # Reversed (Vorname Nachname -> Nachname Vorname)
+    parts = norm.split()
+    if len(parts) == 2:
+        rev = f"{parts[1]} {parts[0]}"
+        for r in riders:
+            if _norm(r["name"]) == rev:
+                return r["id"]
     # Fuzzy-Match
     best_id, best_s = None, 0.0
     for r in riders:
         s = _sim(_norm(r["name"]), norm)
         if s > best_s:
             best_s, best_id = s, r["id"]
-    return best_id if best_s >= 0.82 else None
+    return best_id if best_s >= 0.78 else None
 
 
-def match_team(team_pcs: str, known_teams: set) -> str:
-    """PCS-Teamname zum internen Teamnamen matchen."""
-    norm_pcs = _norm(team_pcs).replace("-", " ").replace("  ", " ")
+def match_team(team_raw: str, known_teams: set) -> str:
+    """Teamname zum internen Teamnamen matchen."""
+    norm_raw = _norm(team_raw).replace("-", " ").replace("  ", " ")
     for t in known_teams:
-        if _norm(t).replace("-", " ").replace("  ", " ") == norm_pcs:
+        if _norm(t).replace("-", " ").replace("  ", " ") == norm_raw:
             return t
-    best_t, best_s = team_pcs, 0.0
+    best_t, best_s = team_raw, 0.0
     for t in known_teams:
-        s = _sim(_norm(t).replace("-", " "), norm_pcs)
+        s = _sim(_norm(t).replace("-", " "), norm_raw)
         if s > best_s:
             best_s, best_t = s, t
-    return best_t if best_s >= 0.72 else team_pcs
+    return best_t if best_s >= 0.72 else team_raw
 
 
-# ── Giro Super Team ──────────────────────────────────────────────────────────
+# ── Giro-Website Parsing ──────────────────────────────────────────────────────
 
-def fetch_super_team_from_giro(stage_num: int, riders: list, known_teams: set) -> list:
-    """Super Team Fahrer von giroditalia.it holen. Gibt Liste der Rider-IDs zurück."""
-    url = f"{GIRO_STAGE_BASE}/{stage_num}/"
-    try:
-        resp = requests.get(url, headers=HEADERS, timeout=15)
-    except requests.RequestException:
-        return []
-    if resp.status_code != 200:
-        return []
-
-    soup = BeautifulSoup(resp.text, "lxml")
-    panel = soup.find(attrs={"data-category": "tab-classifica-CLSQA"})
-    if not panel:
-        return []
-
-    super_teams = set()
-    for line in panel.find_all("div", class_="line-table"):
-        if "display: none" in (line.get("style") or ""):
-            continue
-        link = line.find("a")
-        if link:
-            team_raw = link.get_text(strip=True)
-            matched = match_team(team_raw, known_teams)
-            super_teams.add(matched)
-
-    return [r["id"] for r in riders if r["team"] in super_teams]
+def _giro_name(link_el) -> str:
+    """Fahrernamen aus Giro-Link-Element extrahieren (Vor- und Nachname mit Leerzeichen)."""
+    return " ".join(link_el.stripped_strings)
 
 
-# ── PCS-Parsing ───────────────────────────────────────────────────────────────
-
-def _find_result_ul(soup: BeautifulSoup, *keywords: str) -> BeautifulSoup | None:
-    """
-    Sucht nach einer PCS result-cont-Sektion deren Überschrift eines der Keywords enthält.
-    Gibt das ul-Element zurück, falls gefunden.
-    """
-    for div in soup.find_all("div", class_=lambda c: c and "result" in c.split()):
-        heading = div.find(["h2", "h3", "h4"])
-        if heading:
-            heading_text = heading.get_text(strip=True).lower()
-            if any(kw.lower() in heading_text for kw in keywords):
-                ul = div.find("ul")
-                if ul:
-                    return ul
-    return None
-
-
-def _rider_ids_from_ul(ul, max_n: int, riders: list) -> list:
+def _riders_from_panel(panel, max_n: int, riders: list, include_hidden: bool = True) -> list:
+    """Fahrer-IDs aus einem Giro-Klassifikations-Panel lesen."""
     result = []
-    for li in ul.find_all("li"):
+    for line in panel.find_all("div", class_="line-table"):
         if len(result) >= max_n:
             break
-        link = li.find("a", href=lambda h: h and "/rider/" in (h or ""))
-        if link:
-            rid = match_rider(link.get_text(strip=True), riders)
+        if not include_hidden and "display: none" in (line.get("style") or ""):
+            continue
+        a = line.find("a")
+        if a:
+            rid = match_rider(_giro_name(a), riders)
             if rid and rid not in result:
                 result.append(rid)
     return result
 
 
-def _teams_from_ul(ul, max_n: int, known_teams: set) -> list:
+def _teams_from_panel(panel, max_n: int, known_teams: set, visible_only: bool = True) -> list:
+    """Team-Namen aus einem Giro-Panel lesen."""
     result = []
-    for li in ul.find_all("li"):
+    for line in panel.find_all("div", class_="line-table"):
         if len(result) >= max_n:
             break
-        link = li.find("a", href=lambda h: h and "/team/" in (h or ""))
-        if not link:
-            link = li.find("a")
-        if link:
-            team = match_team(link.get_text(strip=True), known_teams)
-            if team and team not in result:
-                result.append(team)
+        if visible_only and "display: none" in (line.get("style") or ""):
+            continue
+        a = line.find("a")
+        if a:
+            matched = match_team(a.get_text(strip=True), known_teams)
+            if matched and matched not in result:
+                result.append(matched)
     return result
 
 
-def fetch_stage_from_pcs(
+def fetch_stage_from_giro(
     stage_num: int,
     riders: list,
     route_stage: dict,
     known_teams: set,
 ) -> tuple:
     """
-    Lädt Etappenresultate von PCS und gibt (stage_data, message) zurück.
+    Lädt Etappenresultate von giroditalia.it.
+    Gibt (stage_data, dnf_ids, message) zurück.
     stage_data ist None wenn das Laden fehlgeschlagen ist.
     """
-    url = f"{PCS_BASE}/stage-{stage_num}"
+    stage_url = f"{GIRO_STAGE_BASE}/{stage_num}/"
     try:
-        resp = requests.get(url, headers=HEADERS, timeout=15)
+        stage_resp = requests.get(stage_url, headers=HEADERS, timeout=15)
+        gen_resp = requests.get(GIRO_GENERAL_URL, headers=HEADERS, timeout=15)
     except requests.RequestException as e:
-        return None, f"E{stage_num}: Verbindungsfehler – {e}"
+        return None, [], f"E{stage_num}: Verbindungsfehler – {e}"
 
-    if resp.status_code == 404:
-        return None, f"E{stage_num}: Seite auf PCS nicht gefunden."
-    if resp.status_code != 200:
-        return None, f"E{stage_num}: HTTP-Fehler {resp.status_code}."
+    if stage_resp.status_code != 200:
+        return None, [], f"E{stage_num}: HTTP {stage_resp.status_code}."
 
-    soup = BeautifulSoup(resp.text, "lxml")
+    stage_soup = BeautifulSoup(stage_resp.text, "lxml")
 
     is_ttt = "ttt" in route_stage.get("typ", "").lower() or \
              "team time" in route_stage.get("name", "").lower()
@@ -210,74 +181,62 @@ def fetch_stage_from_pcs(
         "super_team": [],
     }
 
-    # 1. Etappenresultat (Top 12)
-    for kw in ["stage result", "stage", "finish", "result"]:
-        ul = _find_result_ul(soup, kw)
-        if ul:
-            ids = _rider_ids_from_ul(ul, 12, riders)
-            if ids:
-                results["etappe"] = ids
-                break
-
-    # Fallback: erste ul.list auf der Seite
-    if not results["etappe"]:
-        for ul in soup.find_all("ul", class_=lambda c: c and "list" in (c or "").split()):
-            ids = _rider_ids_from_ul(ul, 12, riders)
-            if ids:
-                results["etappe"] = ids
-                break
+    # 1. Etappenresultat (ORARR – Top 12, inkl. hidden Zeilen)
+    orarr = stage_soup.find(attrs={"data-category": "tab-classifica-ORARR"})
+    if orarr:
+        results["etappe"] = _riders_from_panel(orarr, 12, riders, include_hidden=True)
 
     if not results["etappe"]:
-        return None, f"E{stage_num}: Keine Resultate gefunden (noch nicht abgeschlossen?)."
+        return None, [], f"E{stage_num}: Keine Resultate auf giroditalia.it (noch nicht abgeschlossen?)."
 
-    # 2. GC nach Etappe (Top 10)
-    for kw in ["general classification", "gc", "overall"]:
-        ul = _find_result_ul(soup, kw)
-        if ul:
-            ids = _rider_ids_from_ul(ul, 10, riders)
-            if ids:
-                results["leader"] = ids
-                break
+    # 2. Super Team (CLSQA – nur sichtbare Teams)
+    clsqa = stage_soup.find(attrs={"data-category": "tab-classifica-CLSQA"})
+    if clsqa:
+        super_teams = set(_teams_from_panel(clsqa, 10, known_teams, visible_only=True))
+        results["super_team"] = [r["id"] for r in riders if r["team"] in super_teams]
 
-    # 3. Bergwertung (Top 5)
-    for kw in ["mountain", "climb", "berg", "kom"]:
-        ul = _find_result_ul(soup, kw)
-        if ul:
-            ids = _rider_ids_from_ul(ul, 5, riders)
-            if ids:
-                results["berg"] = ids
-                break
+    # 3. DNF-Fahrer dieser Etappe
+    dnf_ids = []
+    dnf_panel = stage_soup.find(attrs={"data-category": "tab-ritirati-tappa"})
+    if dnf_panel:
+        for line in dnf_panel.find_all("div", class_="line-table"):
+            a = line.find("a")
+            if a:
+                rid = match_rider(_giro_name(a), riders)
+                if rid:
+                    dnf_ids.append(rid)
 
-    # 4. Punktewertung (Top 5)
-    for kw in ["point", "sprint", "cycliste"]:
-        ul = _find_result_ul(soup, kw)
-        if ul:
-            ids = _rider_ids_from_ul(ul, 5, riders)
-            if ids:
-                results["punkte"] = ids
-                break
+    # 4. Gesamtwertungen von /classifiche/
+    if gen_resp.status_code == 200:
+        gen_soup = BeautifulSoup(gen_resp.text, "lxml")
 
-    # 5. Nachwuchswertung (Top 3)
-    for kw in ["young", "youth", "u23", "white jersey", "maglia bianca"]:
-        ul = _find_result_ul(soup, kw)
-        if ul:
-            ids = _rider_ids_from_ul(ul, 3, riders)
-            if ids:
-                results["nachwuchs"] = ids
-                break
+        # GC / Leader (Top 10)
+        p = gen_soup.find(attrs={"data-category": "tab-classifica-CLGEN"})
+        if p:
+            results["leader"] = _riders_from_panel(p, 10, riders)
 
-    # 6. Teamwertung (Top 3/4)
-    for kw in ["team"]:
-        ul = _find_result_ul(soup, kw)
-        if ul:
+        # Bergwertung (Top 5)
+        p = gen_soup.find(attrs={"data-category": "tab-classifica-CLGPMGEN"})
+        if p:
+            results["berg"] = _riders_from_panel(p, 5, riders)
+
+        # Punktewertung (Top 5)
+        p = gen_soup.find(attrs={"data-category": "tab-classifica-CLPUNGEN"})
+        if p:
+            results["punkte"] = _riders_from_panel(p, 5, riders)
+
+        # Nachwuchs / Weißes Trikot (Top 3)
+        p = gen_soup.find(attrs={"data-category": "tab-classifica-CLGENGIO"})
+        if p:
+            results["nachwuchs"] = _riders_from_panel(p, 3, riders)
+
+        # Teamwertung (Top 3) – oder TTT
+        p = gen_soup.find(attrs={"data-category": "tab-classifica-CLCOMGEN"})
+        if p:
             if is_ttt:
-                results["ttt_order"] = _teams_from_ul(ul, 4, known_teams)
+                results["ttt_order"] = _teams_from_panel(p, 4, known_teams)
             else:
-                results["team_day"] = _teams_from_ul(ul, 3, known_teams)
-            break
-
-    # 7. Super Team von giroditalia.it
-    results["super_team"] = fetch_super_team_from_giro(stage_num, riders, known_teams)
+                results["team_day"] = _teams_from_panel(p, 3, known_teams)
 
     stage_data = {
         "num": stage_num,
@@ -288,14 +247,14 @@ def fetch_stage_from_pcs(
     }
 
     filled = sum(1 for v in results.values() if v)
-    return stage_data, f"E{stage_num} ({stage_data['name']}) importiert ({filled}/8 Felder)."
+    return stage_data, dnf_ids, f"E{stage_num} ({stage_data['name']}) importiert ({filled}/8 Felder)."
 
 
 # ── Haupt-Update-Funktion ─────────────────────────────────────────────────────
 
 def check_and_update() -> dict:
     """
-    Prüft auf fehlende Etappenresultate und lädt diese von PCS.
+    Prüft auf fehlende Etappenresultate und lädt diese von giroditalia.it.
     Gibt {updated, message, stages} zurück.
     """
     cfg = load_config()
@@ -319,18 +278,29 @@ def check_and_update() -> dict:
         return {"updated": 0, "message": cfg["last_message"], "stages": []}
 
     updated_nums, msgs = [], []
+    all_dnf_ids = []
 
     for rs in missing:
-        data, msg = fetch_stage_from_pcs(rs["num"], riders, rs, known_teams)
+        data, dnf_ids, msg = fetch_stage_from_giro(rs["num"], riders, rs, known_teams)
         msgs.append(msg)
         logger.info(msg)
         if data:
             stages.append(data)
             updated_nums.append(rs["num"])
+            all_dnf_ids.extend(dnf_ids)
 
     if updated_nums:
         stages.sort(key=lambda s: s["num"])
         _save("stages.json", stages)
+
+        # Aufgegebene Fahrer markieren
+        if all_dnf_ids:
+            dnf_set = set(all_dnf_ids)
+            for r in riders:
+                if r["id"] in dnf_set:
+                    r["aufgegeben"] = True
+            _save("riders.json", riders)
+
         cfg["last_updated"] = now.isoformat(timespec="seconds")
         prev = cfg.get("stages_updated", [])
         cfg["stages_updated"] = sorted(set(prev + updated_nums))
