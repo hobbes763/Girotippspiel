@@ -190,5 +190,41 @@ input:checked + .slider:before { transform: translateX(20px); }
   </div>
 </div>
 
+<!-- ── Navigation ─────────────────────────────────────────────────────────── -->
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-top:.5rem">
+
+  <a href="/admin/fahrer" style="text-decoration:none">
+    <div class="update-card" style="margin-bottom:0;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='var(--pink)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:1.5rem;margin-bottom:.4rem">🚴</div>
+      <div style="font-weight:700;margin-bottom:.2rem">Fahrer</div>
+      <div style="font-size:.8rem;color:var(--text-muted)">{{ rider_count }} Fahrer · DNF setzen</div>
+    </div>
+  </a>
+
+  <a href="/admin/spieler" style="text-decoration:none">
+    <div class="update-card" style="margin-bottom:0;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='var(--pink)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:1.5rem;margin-bottom:.4rem">👥</div>
+      <div style="font-weight:700;margin-bottom:.2rem">Spieler</div>
+      <div style="font-size:.8rem;color:var(--text-muted)">{{ player_count }} Teilnehmer verwalten</div>
+    </div>
+  </a>
+
+  <a href="/admin/etappe/1" style="text-decoration:none">
+    <div class="update-card" style="margin-bottom:0;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='var(--pink)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:1.5rem;margin-bottom:.4rem">📅</div>
+      <div style="font-weight:700;margin-bottom:.2rem">Etappen</div>
+      <div style="font-size:.8rem;color:var(--text-muted)">{{ stage_count }} Etappen · Ergebnisse</div>
+    </div>
+  </a>
+
+  <a href="/admin/gc" style="text-decoration:none">
+    <div class="update-card" style="margin-bottom:0;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='var(--pink)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:1.5rem;margin-bottom:.4rem">🏆</div>
+      <div style="font-weight:700;margin-bottom:.2rem">GC / Final</div>
+      <div style="font-size:.8rem;color:var(--text-muted)">Gesamtwertung &amp; Abschluss</div>
+    </div>
+  </a>
+
+</div>
 
 {% endblock %}
