@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% block title %}Teilnehmer – Bogos Giro Tippspiel 2026{% endblock %}
 {% block content %}
 
@@ -26,7 +26,7 @@
         <span>🚴 {{ active_player.name }} — Fahrerauswahl</span>
         <span style="font-family:var(--font-display);font-size:1.35rem;font-weight:800;color:var(--green);letter-spacing:.01em">{{ player_total }} Pkt</span>
       </div>
-      <div style="overflow-x:auto">
+      <div class="tbl-scroll">
         <table class="standings-table">
           <thead>
             <tr>
@@ -78,3 +78,4 @@
 </div>
 
 {% endblock %}
+

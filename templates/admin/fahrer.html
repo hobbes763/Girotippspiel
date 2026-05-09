@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% block title %}Fahrer verwalten – Admin{% endblock %}
 {% block content %}
 
@@ -50,7 +50,7 @@
   <!-- Rider list -->
   <div class="card">
     <div class="card-header">📋 Alle Fahrer ({{ riders|length }})</div>
-    <div style="overflow-x:auto">
+    <div class="tbl-scroll">
       <table class="standings-table">
         <thead>
           <tr>
@@ -94,3 +94,4 @@
 </div>
 
 {% endblock %}
+

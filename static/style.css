@@ -207,9 +207,22 @@ a { color: inherit; text-decoration: none; }
   background: var(--white);
   border-radius: var(--radius);
   box-shadow: var(--card-shadow);
-  overflow: clip;
+  overflow: hidden;
   margin-bottom: 1.5rem;
   border: 1px solid rgba(0,0,0,.05);
+}
+
+/* Scrollbalken oben: Container wird vertikal gespiegelt,
+   Tabelle darin wieder zurückgespiegelt → Scrollbalken erscheint oben */
+.tbl-scroll {
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+  transform: rotateX(180deg);
+  display: block;
+  width: 100%;
+}
+.tbl-scroll > table {
+  transform: rotateX(180deg);
 }
 
 .card-header {
@@ -225,14 +238,12 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
   background: var(--white);
   border-left: 4px solid var(--pink);
+  border-radius: var(--radius) var(--radius) 0 0;
 }
 
 /* ─────────────────────────────────────────────
    STANDINGS TABLE
    ───────────────────────────────────────────── */
-.card > div[style*="overflow-x"] {
-  -webkit-overflow-scrolling: touch;
-}
 
 .standings-table { width: 100%; border-collapse: collapse; }
 
@@ -263,6 +274,7 @@ a { color: inherit; text-decoration: none; }
   border-bottom: 1px solid var(--border);
   font-variant-numeric: tabular-nums;
   font-size: .9rem;
+  white-space: nowrap;
 }
 
 .standings-table td:first-child,
@@ -1150,13 +1162,6 @@ select.form-control { cursor: pointer; }
 .row-zero td { opacity: .45; }
 .zero { color: var(--border); }
 
-@media (max-width: 900px) {
-  .col-gc { display: none; }
-}
-@media (max-width: 650px) {
-  .col-team { display: none; }
-  .col-nachwuchs { display: none; }
-}
 
 /* ─────────────────────────────────────────────
    PUNKTE PRO RUNDE TABELLE

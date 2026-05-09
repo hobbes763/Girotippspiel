@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% block title %}Rangliste – Bogos Giro Tippspiel 2026{% endblock %}
 {% block content %}
 
@@ -62,7 +62,7 @@
       <span>📊 Gesamtrangliste</span>
       {% if stages_played > 0 %}<span style="font-size:.875rem;font-weight:500;color:var(--text-muted);letter-spacing:.02em;text-transform:none">Stand nach {{ stages_played }}. Etappe{% if stages_played > 1 %}n{% endif %}</span>{% endif %}
     </div>
-    <div style="overflow-x:auto">
+    <div class="tbl-scroll">
       <table class="standings-table">
         <thead>
           <tr>
@@ -109,7 +109,7 @@
   {% if stages %}
   <div class="card">
     <div class="card-header">📈 Punkteverlauf nach Etappe (kumulativ)</div>
-    <div style="overflow-x:auto; padding:1rem">
+    <div class="tbl-scroll" style="padding:1rem">
       <table class="standings-table table-sm">
         <thead>
           <tr>
@@ -159,7 +159,7 @@
   {% if stages %}
   <div class="card" style="margin-top:1.5rem;padding:0">
     <div class="card-header">📊 Punkte pro Runde</div>
-    <div style="overflow-x:auto">
+    <div class="tbl-scroll">
       <table class="standings-table runden-table">
         <thead>
           <tr>
@@ -238,3 +238,4 @@
 </script>
 
 {% endblock %}
+
