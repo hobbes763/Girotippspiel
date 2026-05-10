@@ -950,7 +950,8 @@
     "name": "SOLER Marc",
     "team": "UAE Team Emirates",
     "wert": 0.3,
-    "aufgegeben": true
+    "aufgegeben": true,
+    "abandoned_before_stage": 2
   },
   {
     "id": 159,
@@ -1030,7 +1031,8 @@
     "name": "HOLTER Ådne",
     "team": "Uno-X Mobility",
     "wert": 0.1,
-    "aufgegeben": true
+    "aufgegeben": true,
+    "abandoned_before_stage": 3
   },
   {
     "id": 172,

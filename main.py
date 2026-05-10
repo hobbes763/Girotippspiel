@@ -5,7 +5,7 @@ import logging
 from contextlib import asynccontextmanager
 from datetime import date
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -402,13 +402,23 @@ async def admin_fahrer_add(
 
 
 @app.post("/admin/fahrer/toggle-aufgegeben")
-async def admin_fahrer_toggle_aufgegeben(request: Request, rider_id: int = Form(...)):
+async def admin_fahrer_toggle_aufgegeben(
+    request: Request,
+    rider_id: int = Form(...),
+    abandoned_before_stage: Optional[int] = Form(None),
+):
     if not _is_admin(request):
         return RedirectResponse("/admin/login", status_code=302)
     riders = load("riders.json")
     for r in riders:
         if r["id"] == rider_id:
-            r["aufgegeben"] = not r.get("aufgegeben", False)
+            currently = r.get("aufgegeben", False)
+            if currently:
+                r["aufgegeben"] = False
+                r.pop("abandoned_before_stage", None)
+            else:
+                r["aufgegeben"] = True
+                r["abandoned_before_stage"] = abandoned_before_stage if abandoned_before_stage else 1
     save("riders.json", riders)
     return RedirectResponse("/admin/fahrer", status_code=303)
 

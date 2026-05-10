@@ -77,8 +77,16 @@
             </td>
             <td style="color:var(--text-muted);font-size:.8rem">#{{ rider.id }}</td>
             <td>
-              <form method="post" action="/admin/fahrer/toggle-aufgegeben" style="display:inline">
+              <form method="post" action="/admin/fahrer/toggle-aufgegeben" style="display:inline;display:flex;align-items:center;gap:.35rem">
                 <input type="hidden" name="rider_id" value="{{ rider.id }}">
+                {% if not rider.aufgegeben %}
+                  <label style="font-size:.78rem;color:var(--text-muted);white-space:nowrap">ab Etappe:
+                    <input type="number" name="abandoned_before_stage" min="1" max="21" value="1"
+                      style="width:3.5rem;padding:.1rem .3rem;font-size:.8rem;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+                  </label>
+                {% else %}
+                  <span style="font-size:.78rem;color:var(--text-muted)">ab Etappe {{ rider.abandoned_before_stage or 1 }}</span>
+                {% endif %}
                 <button type="submit" class="btn btn-sm" style="{% if rider.aufgegeben %}background:var(--red);color:#fff{% else %}background:var(--border);color:var(--text){% endif %}">
                   {% if rider.aufgegeben %}✓ DNF{% else %}– DNF{% endif %}
                 </button>
